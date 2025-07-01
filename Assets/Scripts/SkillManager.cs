@@ -31,16 +31,20 @@ public class SkillManager : MonoBehaviour
     }
     public void AddSkill(SkillData skill)
     {
+        // procura em ambas as listas para evitar duplicacao
         var existing = activeSkills.Find(s => s.data == skill);
+        if (existing == null)
+            existing = reservedSkills.Find(s => s.data == skill);
 
+        // se ja possuir, apenas aumenta o nivel e reaplica bonus
         if (existing != null)
         {
             if (!existing.IsMaxLevel)
             {
                 existing.level++;
                 ReapplyBonuses();
-                skillHUDController.UpdateHUD();
             }
+            skillHUDController.UpdateHUD();
             return;
         }
 
@@ -58,12 +62,18 @@ public class SkillManager : MonoBehaviour
         if (moveToActive)
         {
             if (activeSkills.Count >= maxActiveSlots) return;
+
+            // remove possveis duplicatas
             reservedSkills.Remove(skill);
+            activeSkills.Remove(skill);
+
             activeSkills.Add(skill);
         }
         else
         {
             activeSkills.Remove(skill);
+            reservedSkills.Remove(skill);
+
             reservedSkills.Add(skill);
         }
 

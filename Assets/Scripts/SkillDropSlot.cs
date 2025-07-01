@@ -16,8 +16,7 @@ public class SkillDropSlot : MonoBehaviour, IDropHandler
         // evita mover para mesmo grupo
         if (wasActive == isActiveSlot) return;
 
+        // MoveSkill j atualiza HUD e stats
         SkillManager.Instance.MoveSkill(skill, isActiveSlot);
-        SkillManager.Instance.skillHUDController.UpdateHUD();
-        SkillManager.Instance.ReapplyBonuses();
     }
 }
