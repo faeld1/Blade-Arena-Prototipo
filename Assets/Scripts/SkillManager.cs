@@ -99,16 +99,16 @@ public class SkillManager : MonoBehaviour
         var playerStats = GameManager.Instance?.player?.GetComponent<Player_Stats>();
         if (playerStats == null) return;
 
-        int totalAtk = 0, totalDef = 0, totalHp = 0;
+        int totalAtk = 0, totalHp = 0, totalSpeed = 0;
 
         foreach (var skill in activeSkills)
         {
             totalAtk += skill.data.attackBonus * skill.level;
-            totalDef += skill.data.defenseBonus * skill.level;
             totalHp += skill.data.healthBonus * skill.level;
+            totalSpeed += skill.data.speedBonus * skill.level;
         }
 
-        playerStats.SetBonuses(totalAtk, totalDef, totalHp);
+        playerStats.SetBonuses(totalAtk, totalHp, totalSpeed);
     }
 
     public void CloseShop()
