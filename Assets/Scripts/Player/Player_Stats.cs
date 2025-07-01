@@ -12,10 +12,13 @@ public class Player_Stats : CharacterStats
 
     public void SetBonuses(int atk, int hp, int spd)
     {
+        bool healthChanged = bonusHealth != hp;
+
         bonusAttack = atk;
         bonusHealth = hp;
         bonusSpeed = spd;
 
-        UpdateHealth(); // atualiza vida caso maxHealth tenha mudado
+        if (healthChanged)
+            UpdateHealth(); // atualiza vida caso maxHealth tenha mudado
     }
 }

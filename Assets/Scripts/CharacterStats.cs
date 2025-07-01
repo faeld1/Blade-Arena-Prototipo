@@ -58,9 +58,8 @@ public class CharacterStats : MonoBehaviour
 
         isDead = true;
         Debug.Log($"{gameObject.name} morreu.");
-        // aqui você pode animar, desativar, destruir, etc.
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
     }
-
     public virtual void UpdateHealth()
     {
         StartCoroutine(UpdateHealthWithDelay());
