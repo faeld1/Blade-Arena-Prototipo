@@ -57,7 +57,7 @@ public class CharacterStats : MonoBehaviour
     private IEnumerator UpdateHealthWithDelay()
     {
         yield return new WaitForSeconds(0.001f);
-        currentHealth = maxHealth;
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
         OnHealthChanged?.Invoke();
     }
 }
