@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
@@ -28,15 +26,6 @@ public class CharacterStats : MonoBehaviour
     protected virtual void Awake()
     {
         currentHealth = maxHealth;
-    }
-    private float SumBonus(System.Func<SkillData, float> selector)
-    {
-        if (SkillManager.Instance == null) return 0;
-
-        return SkillManager.Instance.activeSkills.Sum(skill =>
-            skill != null && skill.data != null
-            ? selector(skill.data) * skill.level
-            : 0);
     }
     public void TakeDamage(float amount)
     {
