@@ -25,8 +25,7 @@ public class SkillManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            skillShopUI.gameObject.SetActive(true);
-            skillShopUI.RefreshShop();
+            OpenCloseShop();
         }
     }
     public void AddSkill(SkillData skill)
@@ -111,8 +110,24 @@ public class SkillManager : MonoBehaviour
         playerStats.SetBonuses(totalAtk, totalHp, totalSpeed);
     }
 
+    public void OpenCloseShop()
+    {
+        if (skillShopUI.gameObject.activeSelf)
+        {
+            CloseShop();
+        }
+        else
+        {
+            OpenShop();
+        }
+    }
+
     public void CloseShop()
     {
         skillShopUI.gameObject.SetActive(false);
+    }
+    public void OpenShop()
+    {
+        skillShopUI.gameObject.SetActive(true);
     }
 }
