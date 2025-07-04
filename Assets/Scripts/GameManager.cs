@@ -61,6 +61,23 @@ public class GameManager : MonoBehaviour
             Debug.Log("DERROTA!");
             return;
         }
+        // Vitória se todos os inimigos estiverem mortos
+        bool allDead = true;
+        foreach (var enemy in activeEnemies)
+        {
+            if (!enemy.stats.isDead)
+            {
+                allDead = false;
+                break;
+            }
+        }
+
+        if (allDead)
+        {
+            battleOngoing = false;
+            Debug.Log("VITÓRIA!");
+        }
+    }
 
     public void AddGold(int amount)
     {
@@ -81,21 +98,5 @@ public class GameManager : MonoBehaviour
 
     public int GetCurrentGold() => currentGold;
 
-        // Vitória se todos os inimigos estiverem mortos
-        bool allDead = true;
-        foreach (var enemy in activeEnemies)
-        {
-            if (!enemy.stats.isDead)
-            {
-                allDead = false;
-                break;
-            }
-        }
 
-        if (allDead)
-        {
-            battleOngoing = false;
-            Debug.Log("VITÓRIA!");
-        }
-    }
 }

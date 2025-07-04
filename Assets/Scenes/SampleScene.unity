@@ -2200,6 +2200,7 @@ GameObject:
   - component: {fileID: 1450705019}
   - component: {fileID: 1450705022}
   - component: {fileID: 1450705023}
+  - component: {fileID: 1450705024}
   m_Layer: 0
   m_Name: MANAGERS
   m_TagString: Untagged
@@ -2219,6 +2220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408736e4420404240a7e357524d8fbc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentGold: 0
   player: {fileID: 1652831778}
   activeEnemies: []
   battleOngoing: 1
@@ -2269,6 +2271,19 @@ MonoBehaviour:
   activeContainer: {fileID: 1926028478}
   reserveContainer: {fileID: 1728438422}
   skillSlotPrefab: {fileID: 2913492519715476664, guid: 42aca397036c303409a17ac2f365da22, type: 3}
+--- !u!114 &1450705024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450705018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce5bd724576bce543a6b645d682c24ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldText: {fileID: 1128066748}
 --- !u!1001 &1456427299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6437,6 +6452,18 @@ PrefabInstance:
     - target: {fileID: 2372553765032945296, guid: e1dd3d12d5e206c41bcb8cbe0691f9cc, type: 3}
       propertyPath: m_Name
       value: SkillSlotUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5360698553655788106, guid: e1dd3d12d5e206c41bcb8cbe0691f9cc, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5360698553655788106, guid: e1dd3d12d5e206c41bcb8cbe0691f9cc, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5360698553655788106, guid: e1dd3d12d5e206c41bcb8cbe0691f9cc, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7946188350769431997, guid: e1dd3d12d5e206c41bcb8cbe0691f9cc, type: 3}
       propertyPath: m_Pivot.x

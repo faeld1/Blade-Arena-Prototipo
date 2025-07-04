@@ -63,11 +63,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 163607cb2ea3b604f835d1040b673c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActiveSlot: 0
   iconImage: {fileID: 44978940843808007}
   bgImage: {fileID: 775843676934165881}
-  levelText: {fileID: 917422039078735570}
   nameText: {fileID: 5023885912191492014}
+  levelText: {fileID: 917422039078735570}
 --- !u!114 &-3807611402447955116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,7 +79,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c483841eca3f062418f7952ac48613a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceSlot: {fileID: 0}
 --- !u!225 &1296493919159388934
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -242,8 +240,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -378,8 +376,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

@@ -8,6 +8,7 @@ public class SkillSlotUI : MonoBehaviour
     [SerializeField] private Image backgroundImage;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private TextMeshProUGUI costText;
 
     private SkillData currentSkill;
     private int index;
@@ -34,6 +35,9 @@ public class SkillSlotUI : MonoBehaviour
 
         if (nameText != null)
             nameText.text = skill.skillName;
+
+        if(costText != null)
+            costText.text = skill.cost.ToString();
 
         if (descriptionText != null)
         {
