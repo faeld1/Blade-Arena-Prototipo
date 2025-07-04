@@ -21,4 +21,5 @@ MonoBehaviour:
   defenseBonus: 0
   speedBonus: 0
   healthBonus: 10
+  cost: 1
   maxLevel: 5
