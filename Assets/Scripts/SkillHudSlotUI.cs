@@ -5,6 +5,7 @@ using TMPro;
 public class SkillHudSlotUI : MonoBehaviour
 {
     [SerializeField] private Image iconImage;
+    [SerializeField] private Image bgImage;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI levelText;
 
@@ -17,6 +18,7 @@ public class SkillHudSlotUI : MonoBehaviour
         isActive = _isActive;
 
         if (iconImage) iconImage.sprite = instance.data.icon;
+        if (bgImage) bgImage.color = SkillUIColor.GetColor(instance.data.rarity);
         if (nameText) nameText.text = instance.data.skillName;
         if (levelText) levelText.text = "Lv. " + instance.level;
 

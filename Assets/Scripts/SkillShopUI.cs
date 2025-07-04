@@ -36,12 +36,20 @@ public class SkillShopUI : MonoBehaviour
     {
         if (index >= 0 && index < currentShopSkills.Count)
         {
-            SkillManager.Instance.AddSkill(currentShopSkills[index]);
-            Debug.Log("Skill comprada: " + currentShopSkills[index].skillName);
+            var skill = currentShopSkills[index];
+            if (GameManager.Instance != null && GameManager.Instance.TrySpendGold(skill.cost))
+            {
+                SkillManager.Instance.AddSkill(skill);
+                Debug.Log("Skill comprada: " + skill.skillName);
 
-            skillSlots[index].Hide(); // <- esconde o slot visualmente
+                skillSlots[index].Hide(); // <- esconde o slot visualmente
 
-            SkillManager.Instance.skillHUDController.UpdateHUD(); // <- atualiza HUD de skills
+                SkillManager.Instance.skillHUDController.UpdateHUD(); // <- atualiza HUD de skills
+            }
+            else
+            {
+                Debug.Log("Gold insuficiente para comprar " + skill.skillName);
+            }
         }
     }
 
@@ -53,7 +61,7 @@ public class SkillShopUI : MonoBehaviour
         {
             SkillData selected = allPossibleSkills[Random.Range(0, allPossibleSkills.Count)];
 
-            // Garante que não apareça na loja se já estiver no nível 5
+            // Garante que nÃ£o apareÃ§a na loja se jÃ¡ estiver no nÃ­vel 5
             if (SkillManager.Instance.IsSkillMaxLevel(selected))
             {
                 i--;

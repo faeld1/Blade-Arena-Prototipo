@@ -5,6 +5,7 @@ using TMPro;
 public class SkillSlotUI : MonoBehaviour
 {
     [SerializeField] private Image iconImage;
+    [SerializeField] private Image backgroundImage;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI descriptionText;
 
@@ -27,6 +28,9 @@ public class SkillSlotUI : MonoBehaviour
 
         if (iconImage != null)
             iconImage.sprite = skill.icon;
+
+        if (backgroundImage != null)
+            backgroundImage.color = SkillUIColor.GetColor(skill.rarity);
 
         if (nameText != null)
             nameText.text = skill.skillName;

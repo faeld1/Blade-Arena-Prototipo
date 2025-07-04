@@ -213,6 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 6227096480289852214}
+  backgroundImage: {fileID: 5360698553655788106}
   nameText: {fileID: 604092701500048744}
   descriptionText: {fileID: 3646509888716473291}
 --- !u!114 &2685200227091505709

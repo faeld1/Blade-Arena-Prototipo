@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [Header("Referências")]
+    [SerializeField] private int currentGold = 0;
+    public static event Action<int> OnGoldChanged;
+    [Header("ReferÃªncias")]
     public GameObject player;
     public List<Enemy> activeEnemies = new List<Enemy>();
 
@@ -59,7 +62,26 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // Vitória se todos os inimigos estiverem mortos
+    public void AddGold(int amount)
+    {
+        currentGold += amount;
+        OnGoldChanged?.Invoke(currentGold);
+    }
+
+    public bool TrySpendGold(int amount)
+    {
+        if (currentGold >= amount)
+        {
+            currentGold -= amount;
+            OnGoldChanged?.Invoke(currentGold);
+            return true;
+        }
+        return false;
+    }
+
+    public int GetCurrentGold() => currentGold;
+
+        // VitÃ³ria se todos os inimigos estiverem mortos
         bool allDead = true;
         foreach (var enemy in activeEnemies)
         {
@@ -73,7 +95,7 @@ public class GameManager : MonoBehaviour
         if (allDead)
         {
             battleOngoing = false;
-            Debug.Log("VITÓRIA!");
+            Debug.Log("VITÃ“RIA!");
         }
     }
 }
