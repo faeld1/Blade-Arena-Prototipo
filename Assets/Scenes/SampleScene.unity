@@ -2220,7 +2220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408736e4420404240a7e357524d8fbc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentGold: 0
+  currentGold: 5
   player: {fileID: 1652831778}
   activeEnemies: []
   battleOngoing: 1

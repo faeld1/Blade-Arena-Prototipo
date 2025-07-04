@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Passive_Health
   m_EditorClassIdentifier: 
   skillName: Health
-  description: Increase 10 Health
+  description: Increase 50 Health
   icon: {fileID: 497711233, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
   type: 0
-  rarity: 0
+  rarity: 1
   attackBonus: 0
   defenseBonus: 0
   speedBonus: 0
-  healthBonus: 10
-  cost: 1
+  healthBonus: 50
+  cost: 2
   maxLevel: 5
