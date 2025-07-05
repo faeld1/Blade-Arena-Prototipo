@@ -9,6 +9,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private int currentGold = 0;
     public static event Action<int> OnGoldChanged;
+
+    [Header("Level Settings")]
+    public int playerLevel = 3;
+    public int playerXP = 0;
+    public int[] xpToNextLevel = new int[] { 0, 0, 1, 5, 15, 20, 25, 35, 40, 45 };
+    public static event Action<int> OnLevelUp;
+    public static event Action<int, int, int> OnXPChanged; // level, xp, toNext
     [Header("Referências")]
     public GameObject player;
     public List<Enemy> activeEnemies = new List<Enemy>();
@@ -94,6 +101,42 @@ public class GameManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void AddXP(int amount)
+    {
+        playerXP += amount;
+        TryLevelUp();
+        OnXPChanged?.Invoke(playerLevel, playerXP, GetXPToNextLevel());
+    }
+
+    public bool BuyXP(int amount, int goldCost)
+    {
+        if (TrySpendGold(goldCost))
+        {
+            AddXP(amount);
+            return true;
+        }
+        return false;
+    }
+
+    private void TryLevelUp()
+    {
+        while (playerLevel < 10 && playerXP >= GetXPToNextLevel())
+        {
+            playerXP -= GetXPToNextLevel();
+            playerLevel++;
+            SkillManager.Instance.maxActiveSlots = playerLevel;
+            SkillManager.Instance.skillHUDController.UpdateHUD();
+            OnLevelUp?.Invoke(playerLevel);
+        }
+    }
+
+    private int GetXPToNextLevel()
+    {
+        if (playerLevel <= 0 || playerLevel >= xpToNextLevel.Length)
+            return 0;
+        return xpToNextLevel[playerLevel];
     }
 
     public int GetCurrentGold() => currentGold;
