@@ -13,6 +13,20 @@ public class SkillShopUI : MonoBehaviour
 
     private List<SkillData> currentShopSkills = new();
 
+    private readonly int[,] rarityChances = new int[10,5]
+    {
+        {80,20,0,0,0},
+        {70,30,0,0,0},
+        {55,35,10,0,0},
+        {45,40,15,0,0},
+        {35,40,25,0,0},
+        {25,35,35,5,0},
+        {20,30,40,10,0},
+        {18,24,35,20,3},
+        {15,21,30,28,6},
+        {12,18,28,32,10}
+    };
+
     private void Start()
     {
         refreshButton.onClick.AddListener(RefreshShop);
@@ -59,18 +73,37 @@ public class SkillShopUI : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            SkillData selected = allPossibleSkills[Random.Range(0, allPossibleSkills.Count)];
-
-            // Garante que não apareça na loja se já estiver no nível 5
-            if (SkillManager.Instance.IsSkillMaxLevel(selected))
+            SkillData selected = null;
+            int attempts = 0;
+            while (selected == null && attempts < 20)
             {
-                i--;
-                continue;
+                SkillRarity rarity = GetRandomRarity();
+                var candidates = allPossibleSkills.FindAll(s => s.rarity == rarity && !SkillManager.Instance.IsSkillMaxLevel(s));
+                if (candidates.Count > 0)
+                    selected = candidates[Random.Range(0, candidates.Count)];
+                attempts++;
             }
+
+            if (selected == null)
+                selected = allPossibleSkills[Random.Range(0, allPossibleSkills.Count)];
 
             result.Add(selected);
         }
 
         return result;
+    }
+
+    private SkillRarity GetRandomRarity()
+    {
+        int level = Mathf.Clamp(GameManager.Instance ? GameManager.Instance.playerLevel : 1, 1, 10);
+        int roll = Random.Range(0, 100);
+        int cumulative = 0;
+        for (int r = 0; r < 5; r++)
+        {
+            cumulative += rarityChances[level - 1, r];
+            if (roll < cumulative)
+                return (SkillRarity)r;
+        }
+        return SkillRarity.Common;
     }
 }
