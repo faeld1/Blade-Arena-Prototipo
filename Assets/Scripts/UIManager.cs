@@ -17,7 +17,10 @@ public class UIManager : MonoBehaviour
 
     [Header("LevelXP Settings")]
     [SerializeField] private TextMeshProUGUI levelText;
-    [SerializeField]private TextMeshProUGUI xpText;
+    [SerializeField] private TextMeshProUGUI xpText;
+
+    [Header("Countdown Settings")]
+    [SerializeField] private TextMeshProUGUI countdownText;
 
     private void Awake()
     {
@@ -84,6 +87,12 @@ public class UIManager : MonoBehaviour
     public void UpdateActiveSkillCount()
     {
         activeSkillCountText.text = $"{SkillManager.Instance.activeSkills.Count} / {SkillManager.Instance.maxActiveSlots}";
+    }
+
+    public void UpdateCountdown(int value)
+    {
+        if (countdownText != null)
+            countdownText.text = value.ToString();
     }
 
 }

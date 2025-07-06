@@ -29,8 +29,9 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-      StartCoroutine(GameStartDelay());
+        // Battle is started externally by the BattleManager
     }
+
     private void Update()
     {
         if (!battleOngoing) return;
@@ -38,9 +39,8 @@ public class GameManager : MonoBehaviour
         CheckBattleState();
     }
 
-    private IEnumerator GameStartDelay()
+    public void StartBattle()
     {
-        yield return new WaitForSeconds(.5f);
         battleOngoing = true;
         Debug.Log("BATALHA INICIADA!");
     }
