@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class SkillHudSlotUI : MonoBehaviour
+public class SkillHudSlotUI : MonoBehaviour, IDropHandler
 {
     [SerializeField] private Image iconImage;
     [SerializeField] private Image bgImage;
@@ -27,4 +28,15 @@ public class SkillHudSlotUI : MonoBehaviour
 
     public SkillInstance GetInstance() => instance;
     public bool IsActive() => isActive;
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        var dragged = DraggedSkillSlot.draggedSlotUI;
+        if (dragged == null || dragged == this) return;
+
+        if (dragged.IsActive() != IsActive())
+        {
+            SkillManager.Instance.SwapSkills(dragged.GetInstance(), instance);
+        }
+    }
 }
