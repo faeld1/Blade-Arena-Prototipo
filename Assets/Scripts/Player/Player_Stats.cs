@@ -36,5 +36,26 @@ public class Player_Stats : CharacterStats
     {
         base.Die();
         player.animator.SetTrigger("Death");
+        GameManager.Instance?.PlayerDied();
+        StartCoroutine(SinkAfterDelay());
+    }
+
+    [SerializeField] private float sinkDelay = 2f;
+    [SerializeField] private float sinkDistance = 2f;
+    [SerializeField] private float sinkDuration = 1.5f;
+
+    private IEnumerator SinkAfterDelay()
+    {
+        yield return new WaitForSeconds(sinkDelay);
+        Vector3 start = transform.position;
+        Vector3 end = start - new Vector3(0f, sinkDistance, 0f);
+        float elapsed = 0f;
+        while (elapsed < sinkDuration)
+        {
+            transform.position = Vector3.Lerp(start, end, elapsed / sinkDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = end;
     }
 }

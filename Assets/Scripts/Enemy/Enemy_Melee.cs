@@ -38,4 +38,12 @@ public class Enemy_Melee : Enemy
     {
         stateMachine.ChangeState(deadState); // Change to dead state when the enemy dies
     }
+
+    protected override void OnPlayerDeath()
+    {
+        if (stats != null && stats.isDead) return;
+        agent.isStopped = true;
+        agent.ResetPath();
+        stateMachine.ChangeState(idleState);
+    }
 }

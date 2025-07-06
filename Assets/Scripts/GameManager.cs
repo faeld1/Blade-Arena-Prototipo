@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public static event Action OnPlayerDeath; // Event fired when the player dies
+
     [SerializeField] private int currentGold = 0;
     public static event Action<int> OnGoldChanged;
 
@@ -21,6 +23,13 @@ public class GameManager : MonoBehaviour
     public List<Enemy> activeEnemies = new List<Enemy>();
 
     public bool battleOngoing = false;
+
+    public void PlayerDied()
+    {
+        battleOngoing = false; // stop battle loop
+        OnPlayerDeath?.Invoke();
+        player = null; // enemies no longer have a valid reference
+    }
 
     private void Awake()
     {

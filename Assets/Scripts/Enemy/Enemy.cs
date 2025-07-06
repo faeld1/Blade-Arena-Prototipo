@@ -20,6 +20,16 @@ public class Enemy : MonoBehaviour
     public CharacterStats stats { get; private set; } // Reference to the enemy's stats
     public EnemyStateMachine stateMachine { get; private set; }
 
+    protected virtual void OnEnable()
+    {
+        GameManager.OnPlayerDeath += HandlePlayerDeath;
+    }
+
+    protected virtual void OnDisable()
+    {
+        GameManager.OnPlayerDeath -= HandlePlayerDeath;
+    }
+
     protected virtual void Awake()
     {
         stateMachine = new EnemyStateMachine();
@@ -41,6 +51,16 @@ public class Enemy : MonoBehaviour
     protected virtual void Update()
     {
 
+    }
+
+    private void HandlePlayerDeath()
+    {
+        OnPlayerDeath();
+    }
+
+    protected virtual void OnPlayerDeath()
+    {
+        // Overridden in derived classes to react to player death
     }
 
     public Vector3 GetPatrolDestination()
