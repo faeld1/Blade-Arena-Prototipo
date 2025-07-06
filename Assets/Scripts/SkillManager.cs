@@ -92,6 +92,35 @@ public class SkillManager : MonoBehaviour
         UIManager.Instance?.UpdateActiveSkillCount(); // Atualiza o contador de skills ativas no UIManager
     }
 
+    public void SwapSkills(SkillInstance first, SkillInstance second)
+    {
+        bool firstIsActive = activeSkills.Contains(first);
+        bool secondIsActive = activeSkills.Contains(second);
+
+        if (firstIsActive == secondIsActive) return;
+
+        if (firstIsActive)
+        {
+            activeSkills.Remove(first);
+            reservedSkills.Remove(second);
+
+            activeSkills.Add(second);
+            reservedSkills.Add(first);
+        }
+        else
+        {
+            reservedSkills.Remove(first);
+            activeSkills.Remove(second);
+
+            reservedSkills.Add(second);
+            activeSkills.Add(first);
+        }
+
+        ReapplyBonuses();
+        skillHUDController.UpdateHUD();
+        UIManager.Instance?.UpdateActiveSkillCount();
+    }
+
 
     public int GetSkillLevel(SkillData skill)
     {
