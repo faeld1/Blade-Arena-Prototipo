@@ -29,6 +29,8 @@ public class Player_Combat : MonoBehaviour
         TryAttack();
     }
 
+    public void ResetCurrentTarget() => currentTarget = null;
+
     private void TryAttack()
     {
         if (currentTarget == null || currentTarget.stats.isDead)

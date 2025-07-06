@@ -27,6 +27,7 @@ public class BattleManager : MonoBehaviour
         }
 
         GameManager.Instance.player.GetComponent<Player>().SetManualEnemyTarget();
+        GameManager.Instance.player.GetComponent<Player_Combat>().ResetCurrentTarget();
         // UIManager.Instance?.UpdateCountdown(0);
         UIManager.Instance?.UpdateCountdownZero();
         GameManager.Instance?.StartBattle();
