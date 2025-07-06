@@ -79,6 +79,10 @@ public class Player : MonoBehaviour
         return CurrentEnemyTarget;
     }
 
+    public void SetManualEnemyTarget() => GetClosestEnemy();
+
+    public void ClosestEnemyNull() => CurrentEnemyTarget = null;
+
     public Quaternion FaceTarget(Vector3 target)
     {
         Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);

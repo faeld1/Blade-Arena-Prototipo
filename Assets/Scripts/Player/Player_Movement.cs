@@ -6,11 +6,15 @@ public class Player_Movement : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Transform currentTarget;
+    private Player player;
 
     private void Start()
     {
+        player = GetComponent<Player>();
         agent = GetComponent<NavMeshAgent>();
-        SetTarget(GameManager.Instance?.activeEnemies[0].transform); // Set the target to the player transform
+        //SetTarget(GameManager.Instance?.activeEnemies[0].transform); // Set the target to the player transform
+
+        SetTarget(player.CurrentEnemyTarget?.transform); // Set the target to the current enemy target
     }
 
     private void Update()

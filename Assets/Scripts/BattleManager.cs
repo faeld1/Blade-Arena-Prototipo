@@ -26,9 +26,12 @@ public class BattleManager : MonoBehaviour
             yield return null;
         }
 
-        UIManager.Instance?.UpdateCountdown(0);
+        GameManager.Instance.player.GetComponent<Player>().SetManualEnemyTarget();
+        // UIManager.Instance?.UpdateCountdown(0);
+        UIManager.Instance?.UpdateCountdownZero();
         GameManager.Instance?.StartBattle();
     }
+
 
     private void MoveUnitsToPositions()
     {

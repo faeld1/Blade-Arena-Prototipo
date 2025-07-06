@@ -29,7 +29,8 @@ public class Enemy_Melee : Enemy
     {
         base.Update();
 
-        stateMachine.currentState.Update();
+        if(GameManager.Instance != null && GameManager.Instance.battleOngoing)
+            stateMachine.currentState.Update(); // Update the current state of the enemy
 
     }
 
