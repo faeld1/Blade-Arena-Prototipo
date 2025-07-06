@@ -6,6 +6,7 @@ public class SkillDragHandler : MonoBehaviour, IBeginDragHandler, IEndDragHandle
 {
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
+    private Transform originalParent;
 
     private void Awake()
     {
@@ -22,6 +23,9 @@ public class SkillDragHandler : MonoBehaviour, IBeginDragHandler, IEndDragHandle
     {
         DraggedSkillSlot.draggedSlotUI = GetComponent<SkillHudSlotUI>();
         canvasGroup.blocksRaycasts = false;
+        originalParent = transform.parent;
+        transform.SetParent(transform.root);
+        transform.SetAsLastSibling();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -33,6 +37,7 @@ public class SkillDragHandler : MonoBehaviour, IBeginDragHandler, IEndDragHandle
     {
         DraggedSkillSlot.draggedSlotUI = null;
         canvasGroup.blocksRaycasts = true;
+        transform.SetParent(originalParent);
         rectTransform.anchoredPosition = Vector2.zero;
         SkillManager.Instance.skillHUDController.UpdateHUD();
     }
