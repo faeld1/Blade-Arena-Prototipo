@@ -64,6 +64,7 @@ public class SkillManager : MonoBehaviour
 
         ReapplyBonuses();
         skillHUDController.UpdateHUD(); // AQUI
+        UIManager.Instance?.UpdateActiveSkillCount(); // Atualiza o contador de skills ativas no UIManager
     }
 
     public void MoveSkill(SkillInstance skill, bool moveToActive)
@@ -88,6 +89,7 @@ public class SkillManager : MonoBehaviour
 
         ReapplyBonuses();
         skillHUDController.UpdateHUD(); // AQUI
+        UIManager.Instance?.UpdateActiveSkillCount(); // Atualiza o contador de skills ativas no UIManager
     }
 
 

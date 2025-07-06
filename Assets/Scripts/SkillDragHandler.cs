@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -33,6 +34,7 @@ public class SkillDragHandler : MonoBehaviour, IBeginDragHandler, IEndDragHandle
         DraggedSkillSlot.draggedSlotUI = null;
         canvasGroup.blocksRaycasts = true;
         rectTransform.anchoredPosition = Vector2.zero;
-        SkillManager.Instance?.skillHUDController.UpdateHUD();
+        SkillManager.Instance.skillHUDController.UpdateHUD();
     }
+
 }
