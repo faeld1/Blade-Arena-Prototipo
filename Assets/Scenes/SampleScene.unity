@@ -478,7 +478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056852916023759687, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.8700004
+      value: 8.620001
       objectReference: {fileID: 0}
     - target: {fileID: 5056852916023759687, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2376,7 +2376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056852916023759687, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.2099996
+      value: 10.959998
       objectReference: {fileID: 0}
     - target: {fileID: 5056852916023759687, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3325,6 +3325,7 @@ GameObject:
   - component: {fileID: 1450705023}
   - component: {fileID: 1450705024}
   - component: {fileID: 1450705025}
+  - component: {fileID: 1450705026}
   m_Layer: 0
   m_Name: MANAGERS
   m_TagString: Untagged
@@ -3350,7 +3351,7 @@ MonoBehaviour:
   xpToNextLevel: 000000000000000001000000050000000f000000140000001900000023000000280000002d000000
   player: {fileID: 1652831778}
   activeEnemies: []
-  battleOngoing: 1
+  battleOngoing: 0
 --- !u!4 &1450705020
 Transform:
   m_ObjectHideFlags: 0
@@ -3429,6 +3430,27 @@ MonoBehaviour:
   activeSkillCountText: {fileID: 1489891673}
   levelText: {fileID: 1551011778}
   xpText: {fileID: 1327556554}
+  countdownText: {fileID: 1089670435}
+--- !u!114 &1450705026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450705018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64b54506d59c3c64486852f4a5fb73d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDestination: {fileID: 1912464559}
+  enemyDestinations:
+  - {fileID: 1570469797}
+  - {fileID: 912846234}
+  - {fileID: 317133992}
+  - {fileID: 207707430}
+  - {fileID: 918271077}
+  countdownDuration: 5
 --- !u!1001 &1456427299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4211,7 +4233,7 @@ Transform:
   m_GameObject: {fileID: 1652831778}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5.5, y: 0, z: -0}
+  m_LocalPosition: {x: -8.87, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4810,7 +4832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056852916023759687, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.1
+      value: 10.850001
       objectReference: {fileID: 0}
     - target: {fileID: 5056852916023759687, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5440,7 +5462,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056852916023759687, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.98
+      value: 8.73
       objectReference: {fileID: 0}
     - target: {fileID: 5056852916023759687, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7703,7 +7725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056852916023759687, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.49
+      value: 7.24
       objectReference: {fileID: 0}
     - target: {fileID: 5056852916023759687, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
       propertyPath: m_LocalPosition.y
