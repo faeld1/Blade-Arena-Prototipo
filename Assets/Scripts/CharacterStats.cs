@@ -44,7 +44,6 @@ public class CharacterStats : MonoBehaviour
     {
         if (CompareTag("Enemy"))
             GameManager.Instance?.UnregisterEnemy(GetComponent<Enemy>());
-        GameManager.Instance?.AddGold(2);
 
         isDead = true;
         Debug.Log($"{gameObject.name} morreu.");

@@ -31,4 +31,10 @@ public class Player_Stats : CharacterStats
         if (healthChanged)
             UpdateHealth(); // atualiza vida caso maxHealth tenha mudado
     }
+
+    override protected void Die()
+    {
+        base.Die();
+        player.animator.SetTrigger("Death");
+    }
 }
