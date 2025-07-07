@@ -33,10 +33,23 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     private void Start()
     {
         lives = startingLives;
-        if (SceneManager.GetActiveScene().name == "BattleScene" && currentLevel != null)
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "BattleScene" && currentLevel != null)
         {
             if (BattleManager.Instance != null)
             {
