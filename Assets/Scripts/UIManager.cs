@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
 
     [Header("Countdown Settings")]
     [SerializeField] private TextMeshProUGUI countdownText;
+    [SerializeField] private TextMeshProUGUI roundText;
+    [SerializeField] private TextMeshProUGUI livesText;
 
     private void Awake()
     {
@@ -98,6 +100,18 @@ public class UIManager : MonoBehaviour
     {
         UpdateCountdown(0);
         countdownText.gameObject.SetActive(false);
+    }
+
+    public void UpdateRound(int round, int total)
+    {
+        if (roundText != null)
+            roundText.text = $"Round {round} / {total}";
+    }
+
+    public void UpdateLives(int value)
+    {
+        if (livesText != null)
+            livesText.text = value.ToString();
     }
 
 }

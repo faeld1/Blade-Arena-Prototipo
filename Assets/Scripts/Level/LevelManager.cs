@@ -1,0 +1,154 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+
+public class LevelManager : MonoBehaviour
+{
+    public static LevelManager Instance;
+
+    [Header("Level Setup")]
+    [SerializeField] private LevelData currentLevel;
+    [SerializeField] private Transform playerSpawnPoint;
+    [SerializeField] private Transform endPoint;
+    [SerializeField] private List<Transform> enemySpawnPoints = new List<Transform>();
+    [SerializeField] private float countdownDuration = 5f;
+    [SerializeField] private int startingLives = 3;
+
+    private int currentRound = 0;
+    private int lives;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        lives = startingLives;
+        if (SceneManager.GetActiveScene().name == "BattleScene" && currentLevel != null)
+        {
+            StartCoroutine(LevelRoutine());
+        }
+    }
+
+    public void SetLevel(LevelData data)
+    {
+        currentLevel = data;
+    }
+
+    private IEnumerator LevelRoutine()
+    {
+        for (currentRound = 0; currentRound < currentLevel.rounds.Count; currentRound++)
+        {
+            SpawnPlayer();
+            SpawnEnemies(currentLevel.rounds[currentRound]);
+            UIManager.Instance?.UpdateRound(currentRound + 1, currentLevel.rounds.Count);
+            yield return StartCoroutine(CountdownRoutine());
+            GameManager.Instance?.StartBattle();
+            yield return new WaitUntil(() => GameManager.Instance.battleOngoing == false);
+
+            bool playerDead = GameManager.Instance.player == null || GameManager.Instance.player.GetComponent<CharacterStats>().isDead;
+            if (playerDead)
+            {
+                lives--;
+                UIManager.Instance?.UpdateLives(lives);
+                if (lives <= 0) yield break;
+                RemoveRemainingEnemies();
+                yield return new WaitForSeconds(5f);
+                RespawnPlayer();
+            }
+            else
+            {
+                MovePlayerToEndPoint();
+                yield return new WaitForSeconds(5f);
+            }
+        }
+    }
+
+    private IEnumerator CountdownRoutine()
+    {
+        float timer = countdownDuration;
+        while (timer > 0f)
+        {
+            UIManager.Instance?.UpdateCountdown(Mathf.CeilToInt(timer));
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        UIManager.Instance?.UpdateCountdownZero();
+    }
+
+    private void SpawnPlayer()
+    {
+        if (GameManager.Instance.player == null) return;
+        NavMeshAgent agent = GameManager.Instance.player.GetComponent<NavMeshAgent>();
+        agent.Warp(playerSpawnPoint.position);
+        GameManager.Instance.player.SetActive(true);
+        GameManager.Instance.player.GetComponent<CharacterStats>().currentHealth = GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth();
+        GameManager.Instance.player.GetComponent<CharacterStats>().isDead = false;
+    }
+
+    private void RespawnPlayer()
+    {
+        if (GameManager.Instance.player == null) return;
+        Vector3 start = endPoint.position - Vector3.up * 2f;
+        GameManager.Instance.player.transform.position = start;
+        GameManager.Instance.player.SetActive(true);
+        StartCoroutine(RisePlayer(GameManager.Instance.player.transform, endPoint.position));
+        GameManager.Instance.player.GetComponent<CharacterStats>().currentHealth = GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth();
+        GameManager.Instance.player.GetComponent<CharacterStats>().isDead = false;
+        GameManager.Instance.player.GetComponent<Player>().SetIdle();
+        GameManager.Instance.player.GetComponent<Player_Movement>().ResumeMovement();
+    }
+
+    private IEnumerator RisePlayer(Transform target, Vector3 end)
+    {
+        float duration = 1f;
+        float elapsed = 0f;
+        Vector3 start = target.position;
+        while (elapsed < duration)
+        {
+            target.position = Vector3.Lerp(start, end, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        target.position = end;
+    }
+
+    private void SpawnEnemies(RoundData round)
+    {
+        for (int i = 0; i < round.enemies.Count && i < enemySpawnPoints.Count; i++)
+        {
+            if (round.enemies[i] == null) continue;
+            Transform point = enemySpawnPoints[i];
+            Instantiate(round.enemies[i], point.position, point.rotation);
+        }
+    }
+
+    private void RemoveRemainingEnemies()
+    {
+        foreach (var enemy in new List<Enemy>(GameManager.Instance.activeEnemies))
+        {
+            if (enemy != null)
+                Destroy(enemy.gameObject);
+        }
+        GameManager.Instance.activeEnemies.Clear();
+    }
+
+    private void MovePlayerToEndPoint()
+    {
+        if (GameManager.Instance.player == null) return;
+        NavMeshAgent agent = GameManager.Instance.player.GetComponent<NavMeshAgent>();
+        agent.isStopped = false;
+        agent.SetDestination(endPoint.position);
+    }
+}
