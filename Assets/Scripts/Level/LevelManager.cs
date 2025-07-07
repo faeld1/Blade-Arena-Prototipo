@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour
 
     private int currentRound = 0;
     private int lives;
+    private int currentLevelIndex = -1;
 
     private void Awake()
     {
@@ -37,13 +38,20 @@ public class LevelManager : MonoBehaviour
         lives = startingLives;
         if (SceneManager.GetActiveScene().name == "BattleScene" && currentLevel != null)
         {
+            if (BattleManager.Instance != null)
+            {
+                playerSpawnPoint = BattleManager.Instance.PlayerStartPosition;
+                endPoint = BattleManager.Instance.PlayerEndPosition;
+                enemySpawnPoints = BattleManager.Instance.EnemyDestinations;
+            }
             StartCoroutine(LevelRoutine());
         }
     }
 
-    public void SetLevel(LevelData data)
+    public void SetLevel(LevelData data, int index = -1)
     {
         currentLevel = data;
+        currentLevelIndex = index;
     }
 
     private IEnumerator LevelRoutine()
@@ -72,6 +80,11 @@ public class LevelManager : MonoBehaviour
                 MovePlayerToEndPoint();
                 yield return new WaitForSeconds(5f);
             }
+        }
+
+        if (lives > 0 && currentLevelIndex >= 0)
+        {
+            ES3.Save($"LevelUnlocked_{currentLevelIndex + 1}", true);
         }
     }
 
