@@ -5,11 +5,24 @@ using UnityEngine.AI;
 
 public class BattleManager : MonoBehaviour
 {
+    public static BattleManager Instance;
+    [SerializeField] private bool autoStart = false;
     [SerializeField] private Transform playerDestination;
     [SerializeField] private List<Transform> enemyDestinations = new List<Transform>();
     [SerializeField] private float countdownDuration = 5f;
 
+    private void Awake()
+    {
+        if (Instance == null) Instance = this; else Destroy(gameObject);
+    }
+
     private void Start()
+    {
+        if (autoStart)
+            StartCoroutine(BattleRoutine());
+    }
+
+    public void BeginBattle()
     {
         StartCoroutine(BattleRoutine());
     }
@@ -62,3 +75,4 @@ public class BattleManager : MonoBehaviour
         }
     }
 }
+
