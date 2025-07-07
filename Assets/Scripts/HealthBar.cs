@@ -28,10 +28,10 @@ public class HealthBar : MonoBehaviour
 
     public void UpdateHealthUI()
     {
-        slider.maxValue = myStats.maxHealth;
+        slider.maxValue = myStats.GetMaxHealth();
         slider.value = myStats.currentHealth;
 
-        healthText.text = (myStats.currentHealth + "/" + myStats.maxHealth);
+        healthText.text = (myStats.currentHealth + "/" + myStats.GetMaxHealth());
 
 
         if (myStats.currentHealth <= 0)

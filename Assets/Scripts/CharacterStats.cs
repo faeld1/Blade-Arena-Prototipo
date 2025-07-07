@@ -11,26 +11,24 @@ public class CharacterStats : MonoBehaviour
     public Stat_DefenseGroup defense;
     public Stat_MajorGroup major;
 
-    public float baseMaxHealth = 100f;
-    public float baseAttackDamage = 10f;
-    public float baseAttackCooldown = 1.5f;
+    public int level = 1; // Character level
 
-    // Propriedades que podem ser sobrescritas
-    public virtual float BonusAttack => 0;
-    public virtual float BonusHealth => 0;
-    public virtual float BonusSpeed => 0;
+    public float baseAttackCooldown = 1.5f; // Base attack cooldown in seconds
+
+    public float attackCooldown => Mathf.Max(0.2f, baseAttackCooldown - offense.attackSpeed.GetValue() * 0.1f);
 
     [HideInInspector] public bool isDead = false;
-
-    public float maxHealth => baseMaxHealth + BonusHealth;
-    public float attackDamage => baseAttackDamage + BonusAttack;
-    public float attackCooldown => Mathf.Max(0.2f, baseAttackCooldown - offense.attackSpeed.GetValue() * 0.1f);
 
     public float currentHealth;
 
     protected virtual void Awake()
     {
-        currentHealth = maxHealth;
+        currentHealth = GetMaxHealth();
+    }
+
+    protected virtual void Start()
+    {
+
     }
     public virtual void TakeDamage(float _damage)
     {
@@ -130,7 +128,7 @@ public class CharacterStats : MonoBehaviour
 
         isDead = true;
         Debug.Log($"{gameObject.name} morreu.");
-        currentHealth = Mathf.Min(currentHealth, maxHealth);
+        currentHealth = Mathf.Min(currentHealth, GetMaxHealth());
     }
     public virtual void UpdateHealth()
     {
@@ -140,7 +138,7 @@ public class CharacterStats : MonoBehaviour
     private IEnumerator UpdateHealthWithDelay()
     {
         yield return new WaitForSeconds(0.001f);
-        currentHealth = Mathf.Min(currentHealth, maxHealth);
+        currentHealth = Mathf.Min(currentHealth, GetMaxHealth());
         OnHealthChanged?.Invoke();
     }
 

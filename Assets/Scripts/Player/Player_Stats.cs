@@ -10,15 +10,26 @@ public class Player_Stats : CharacterStats
     [SerializeField] private float sinkDistance = 2f;
     [SerializeField] private float sinkDuration = 1.5f;
 
+    [SerializeField] private int currentXP;
+    [SerializeField] private int xpToNextLevel;
+    private float xpGrowthFactor = 1.25f;
+
+    public int CurrentXP => currentXP;
+    public int XpToNextLevel => xpToNextLevel;
+
     protected override void Awake()
     {
         base.Awake();
         player = GetComponent<Player>();
     }
 
-    public override float BonusAttack => 0;
-    public override float BonusHealth => 0;
-    public override float BonusSpeed => 0;
+    override protected void Start()
+    {
+        LoadFragmentData();
+        base.Start();
+
+        xpToNextLevel = Mathf.RoundToInt(10 * Mathf.Pow(xpGrowthFactor, level - 1)); // Initial XP to next level based on level
+    }
 
     public void ApplySkillModifier(SkillInstance skill)
     {
@@ -82,5 +93,45 @@ public class Player_Stats : CharacterStats
         }
         gameObject.SetActive(false); // desativa o jogador após afundar
         //transform.position = end;
+    }
+
+    public void AddXP(int amount)
+    {
+        int xpAmount = amount * 2; // Double XP
+
+        currentXP += xpAmount;
+
+        CheckLevelUp();
+        SaveFragmentData();
+    }
+
+    // Método para verificar se é hora de subir de nível
+    private void CheckLevelUp()
+    {
+        while (currentXP >= xpToNextLevel)
+        {
+            LevelUp();
+        }
+    }
+
+    // Método para subir de nível
+    private void LevelUp()
+    {
+        level++;
+        currentXP -= xpToNextLevel;  // Reduz o XP necessário para o próximo nível
+        xpToNextLevel = Mathf.RoundToInt(xpToNextLevel * xpGrowthFactor);  // Aumenta o XP necessário com base no fator de crescimento
+        Debug.Log("Level Up! Novo nível: " + level);
+    }
+
+    private void SaveFragmentData()
+    {
+        ES3.Save("PlayerLevel", level);
+        ES3.Save("PlayerCurrentXP", currentXP);
+    }
+
+    private void LoadFragmentData()
+    {
+        level = ES3.Load("PlayerLevel", defaultValue: 1);
+        currentXP = ES3.Load("PlayerCurrentXP", defaultValue: 0);
     }
 }

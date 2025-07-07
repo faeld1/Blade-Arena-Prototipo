@@ -3662,7 +3662,7 @@ MonoBehaviour:
   - {fileID: 317133992}
   - {fileID: 207707430}
   - {fileID: 918271077}
-  countdownDuration: 5
+  countdownDuration: 10
 --- !u!1001 &1456427299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4501,14 +4501,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a1f574bcd8c574d814ecfe19f8f3eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseMaxHealth: 1000
-  baseAttackDamage: 10
+  resources:
+    maxHealth:
+      baseValue: 1000
+      modifiers: []
+    healthRegen:
+      baseValue: 0
+      modifiers: []
+  offense:
+    attackSpeed:
+      baseValue: 1
+      modifiers: []
+    damage:
+      baseValue: 10
+      modifiers: []
+    critPower:
+      baseValue: 0
+      modifiers: []
+    critChance:
+      baseValue: 0
+      modifiers: []
+    armorReduction:
+      baseValue: 0
+      modifiers: []
+    fireDamage:
+      baseValue: 0
+      modifiers: []
+    iceDamage:
+      baseValue: 0
+      modifiers: []
+    lightningDamage:
+      baseValue: 0
+      modifiers: []
+  defense:
+    armor:
+      baseValue: 0
+      modifiers: []
+    evasion:
+      baseValue: 0
+      modifiers: []
+    fireRes:
+      baseValue: 0
+      modifiers: []
+    iceRes:
+      baseValue: 0
+      modifiers: []
+    lightningRes:
+      baseValue: 0
+      modifiers: []
+  major:
+    strength:
+      baseValue: 0
+      modifiers: []
+    agility:
+      baseValue: 0
+      modifiers: []
+    intelligence:
+      baseValue: 0
+      modifiers: []
+    vitality:
+      baseValue: 0
+      modifiers: []
+  level: 1
   baseAttackCooldown: 1.5
   isDead: 0
   currentHealth: 0
   sinkDelay: 2
   sinkDistance: 2
   sinkDuration: 1.5
+  currentXP: 0
+  xpToNextLevel: 0
 --- !u!114 &1652831783
 MonoBehaviour:
   m_ObjectHideFlags: 0
