@@ -96,6 +96,12 @@ public class UIManager : MonoBehaviour
         if (countdownText != null)
             countdownText.text = value.ToString();
     }
+
+    public void EnableCountdown()
+    {
+        if (countdownText != null)
+            countdownText.gameObject.SetActive(true);
+    }
     public void UpdateCountdownZero()
     {
         UpdateCountdown(0);

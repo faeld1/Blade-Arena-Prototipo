@@ -103,6 +103,7 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator CountdownRoutine()
     {
+        UIManager.Instance?.EnableCountdown();
         float timer = countdownDuration;
         while (timer > 0f)
         {
@@ -156,7 +157,11 @@ public class LevelManager : MonoBehaviour
         {
             if (round.enemies[i] == null) continue;
             Transform point = enemySpawnPoints[i];
-            Instantiate(round.enemies[i], point.position, point.rotation);
+            GameObject enemyObj = Instantiate(round.enemies[i], point.position, point.rotation);
+            if (GameManager.Instance.player != null)
+            {
+                enemyObj.transform.LookAt(GameManager.Instance.player.transform);
+            }
         }
     }
 
