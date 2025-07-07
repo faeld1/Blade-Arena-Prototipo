@@ -12,6 +12,10 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private List<Transform> enemyDestinations = new List<Transform>();
     [SerializeField] private float countdownDuration = 5f;
 
+    public Transform PlayerEndPosition => playerDestination;
+    public Transform PlayerStartPosition => playerStartPos;
+    public List<Transform> EnemyDestinations => enemyDestinations;
+
     private void Awake()
     {
         if (Instance == null) Instance = this; else Destroy(gameObject);
