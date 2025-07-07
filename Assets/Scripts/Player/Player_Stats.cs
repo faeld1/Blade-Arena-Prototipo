@@ -16,26 +16,47 @@ public class Player_Stats : CharacterStats
         player = GetComponent<Player>();
     }
 
-    private int bonusAttack;
-    private int bonusHealth;
-    private int bonusSpeed;
+    public override float BonusAttack => 0;
+    public override float BonusHealth => 0;
+    public override float BonusSpeed => 0;
 
-    public override float BonusAttack => bonusAttack;
-    public override float BonusHealth => bonusHealth;
-    public override float BonusSpeed => bonusSpeed;
-
-    public void SetBonuses(int atk, int hp, int spd)
+    public void ApplySkillModifier(SkillInstance skill)
     {
-        bool healthChanged = bonusHealth != hp;
+        string source = skill.data.skillName;
 
-        bonusAttack = atk;
-        bonusHealth = hp;
-        bonusSpeed = spd;
+        if (skill.data.attackBonus != 0)
+            offense.damage.AddModifier(skill.data.attackBonus * skill.level, source);
 
-        player.animator.SetFloat("AttackSpeed", 1f + (BonusSpeed * 0.1f) * 2);
+        if (skill.data.healthBonus != 0)
+        {
+            resources.maxHealth.AddModifier(skill.data.healthBonus * skill.level, source);
+            UpdateHealth();
+        }
 
-        if (healthChanged)
-            UpdateHealth(); // atualiza vida caso maxHealth tenha mudado
+        if (skill.data.speedBonus != 0)
+            offense.attackSpeed.AddModifier(skill.data.speedBonus * skill.level, source);
+
+        if (skill.data.defenseBonus != 0)
+            defense.armor.AddModifier(skill.data.defenseBonus * skill.level, source);
+
+        UpdateAttackAnimationSpeed();
+    }
+
+    public void RemoveSkillModifier(SkillInstance skill)
+    {
+        string source = skill.data.skillName;
+
+        offense.damage.RemoveModifier(source);
+        resources.maxHealth.RemoveModifier(source);
+        offense.attackSpeed.RemoveModifier(source);
+        defense.armor.RemoveModifier(source);
+
+        UpdateAttackAnimationSpeed();
+    }
+
+    private void UpdateAttackAnimationSpeed()
+    {
+        player.animator.SetFloat("AttackSpeed", 1f + offense.attackSpeed.GetValue() * 0.2f);
     }
 
     override protected void Die()
@@ -59,7 +80,7 @@ public class Player_Stats : CharacterStats
             elapsed += Time.deltaTime;
             yield return null;
         }
-        gameObject.SetActive(false); // desativa o jogador após afundar
+        gameObject.SetActive(false); // desativa o jogador apÃ³s afundar
         //transform.position = end;
     }
 }

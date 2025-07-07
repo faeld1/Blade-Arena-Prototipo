@@ -79,7 +79,9 @@ public class Enemy : MonoBehaviour
     {
         if (GameManager.Instance?.player != null)
         {
-            GameManager.Instance.player.GetComponent<CharacterStats>().TakeDamage(stats.attackDamage);
+            bool isCrit;
+            float damage = stats.GetDamage(out isCrit);
+            GameManager.Instance.player.GetComponent<CharacterStats>().TakeDamage(damage);
         }
     }
 
