@@ -8,6 +8,7 @@ public class BattleManager : MonoBehaviour
     public static BattleManager Instance;
     [SerializeField] private bool autoStart = false;
     [SerializeField] private Transform playerDestination;
+    [SerializeField] private Transform playerStartPos;
     [SerializeField] private List<Transform> enemyDestinations = new List<Transform>();
     [SerializeField] private float countdownDuration = 5f;
 
