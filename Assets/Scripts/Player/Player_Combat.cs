@@ -82,11 +82,13 @@ public class Player_Combat : MonoBehaviour
     {
         if (currentTarget != null && !currentTarget.stats.isDead)
         {
-            currentTarget.stats.TakeDamage(stats.attackDamage);
+            bool isCrit;
+            float damage = stats.GetDamage(out isCrit);
+            currentTarget.stats.TakeDamage(damage);
         }
     }
 
-    // Chamado no final da animação se quiser resetar algo
+    // Chamado no final da animaÃ§Ã£o se quiser resetar algo
     public void OnAttackAnimationEnd()
     {
         // Pode ser usado para controlar combo, cooldowns, etc

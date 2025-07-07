@@ -24,7 +24,7 @@ public class CharacterStats : MonoBehaviour
 
     public float maxHealth => baseMaxHealth + BonusHealth;
     public float attackDamage => baseAttackDamage + BonusAttack;
-    public float attackCooldown => Mathf.Max(0.2f, baseAttackCooldown - BonusSpeed * 0.1f);
+    public float attackCooldown => Mathf.Max(0.2f, baseAttackCooldown - offense.attackSpeed.GetValue() * 0.1f);
 
     public float currentHealth;
 

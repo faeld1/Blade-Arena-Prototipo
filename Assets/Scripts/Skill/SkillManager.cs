@@ -139,16 +139,14 @@ public class SkillManager : MonoBehaviour
         var playerStats = GameManager.Instance?.player?.GetComponent<Player_Stats>();
         if (playerStats == null) return;
 
-        int totalAtk = 0, totalHp = 0, totalSpeed = 0;
+        foreach (var skill in activeSkills)
+            playerStats.RemoveSkillModifier(skill);
+
+        foreach (var skill in reservedSkills)
+            playerStats.RemoveSkillModifier(skill);
 
         foreach (var skill in activeSkills)
-        {
-            totalAtk += skill.data.attackBonus * skill.level;
-            totalHp += skill.data.healthBonus * skill.level;
-            totalSpeed += skill.data.speedBonus * skill.level;
-        }
-
-        playerStats.SetBonuses(totalAtk, totalHp, totalSpeed);
+            playerStats.ApplySkillModifier(skill);
     }
 
     public void OpenCloseShop()
