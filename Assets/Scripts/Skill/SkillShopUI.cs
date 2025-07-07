@@ -1,7 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections.Generic;
 
 public class SkillShopUI : MonoBehaviour
 {
@@ -11,9 +10,11 @@ public class SkillShopUI : MonoBehaviour
 
     [SerializeField] private List<SkillData> allPossibleSkills;
 
+    private bool firstRefresh = false;
+
     private List<SkillData> currentShopSkills = new();
 
-    private readonly int[,] rarityChances = new int[10,5]
+    private readonly int[,] rarityChances = new int[10, 5]
     {
         {80,20,0,0,0},
         {70,30,0,0,0},
@@ -44,6 +45,11 @@ public class SkillShopUI : MonoBehaviour
             skillSlots[i].gameObject.SetActive(true); // <- reativa caso tenha sido escondido antes
             skillSlots[i].Setup(currentShopSkills[i], i, this);
         }
+
+        if (firstRefresh == true)
+            GameManager.Instance.TrySpendGold(2); // <- gasta 2 de gold para atualizar a loja
+
+        firstRefresh = true; // <- marca que a loja foi atualizada pelo menos uma vez
     }
 
     public void BuySkill(int index)

@@ -49,6 +49,8 @@ public class HealthBar : MonoBehaviour
                 StartCoroutine(DeathWithDelay());
             }
 
+            this.gameObject.SetActive(false);
+
         }
     }
     private IEnumerator DeathWithDelay()

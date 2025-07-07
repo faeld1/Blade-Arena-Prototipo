@@ -1,8 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player_Stats : CharacterStats
 {
     private Player player;
+
+    [Header("Player Die Settings")]
+    [SerializeField] private float sinkDelay = 2f;
+    [SerializeField] private float sinkDistance = 2f;
+    [SerializeField] private float sinkDuration = 1.5f;
 
     protected override void Awake()
     {
@@ -40,9 +46,6 @@ public class Player_Stats : CharacterStats
         StartCoroutine(SinkAfterDelay());
     }
 
-    [SerializeField] private float sinkDelay = 2f;
-    [SerializeField] private float sinkDistance = 2f;
-    [SerializeField] private float sinkDuration = 1.5f;
 
     private IEnumerator SinkAfterDelay()
     {
@@ -56,6 +59,7 @@ public class Player_Stats : CharacterStats
             elapsed += Time.deltaTime;
             yield return null;
         }
-        transform.position = end;
+        gameObject.SetActive(false); // desativa o jogador após afundar
+        //transform.position = end;
     }
 }
