@@ -17,15 +17,16 @@ public class HealthBar : MonoBehaviour
     private void Awake()
     {
         myStats = GetComponentInParent<CharacterStats>();
-    }
-
-    private void Start()
-    {
         slider = GetComponentInChildren<Slider>();
 
         enemy = GetComponentInParent<Enemy>();
         player = GetComponentInParent<Player>();
         healthText = GetComponentInChildren<TextMeshProUGUI>();
+
+    }
+
+    private void Start()
+    {
 
         UpdateHealthUI();
     }
