@@ -13,6 +13,14 @@ public class Player_Combat : MonoBehaviour
     private bool isAttacking = false;
 
     private Enemy currentTarget;
+
+    public void ResetAttack()
+    {
+        isAttacking = false;
+        attackTimer = 0f;
+        if (player != null)
+            player.animator.SetBool("IsAttacking", false);
+    }
     private void Start()
     {
         stats = GetComponent<CharacterStats>();

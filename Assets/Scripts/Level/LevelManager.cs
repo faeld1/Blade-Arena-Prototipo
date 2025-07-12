@@ -105,6 +105,7 @@ public class LevelManager : MonoBehaviour
                 RespawnPlayer();
                 yield return new WaitUntil(() =>
                     Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
+                playerDiedLastRound = false;
             }
             else
             {
@@ -142,25 +143,43 @@ public class LevelManager : MonoBehaviour
     private void SpawnPlayer()
     {
         if (GameManager.Instance.player == null) return;
-        NavMeshAgent agent = GameManager.Instance.player.GetComponent<NavMeshAgent>();
+        var playerObj = GameManager.Instance.player;
+        NavMeshAgent agent = playerObj.GetComponent<NavMeshAgent>();
         agent.Warp(playerSpawnPoint.position);
-        GameManager.Instance.player.SetActive(true);
-        GameManager.Instance.player.GetComponent<CharacterStats>().currentHealth = GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth();
-        GameManager.Instance.player.GetComponent<CharacterStats>().isDead = false;
+        playerObj.SetActive(true);
+        CharacterStats stats = playerObj.GetComponent<CharacterStats>();
+        stats.currentHealth = stats.GetMaxHealth();
+        stats.isDead = false;
+        playerObj.GetComponent<Player_Combat>()?.ResetAttack();
+        EnablePlayerHealthBar(playerObj);
     }
 
     private void RespawnPlayer()
     {
         if (GameManager.Instance.player == null) return;
-        GameManager.Instance.player.SetActive(true);
-        NavMeshAgent agent = GameManager.Instance.player.GetComponent<NavMeshAgent>();
+        var playerObj = GameManager.Instance.player;
+        playerObj.SetActive(true);
+        NavMeshAgent agent = playerObj.GetComponent<NavMeshAgent>();
         agent.Warp(playerSpawnPoint.position);
         agent.isStopped = false;
         agent.SetDestination(endPoint.position);
-        GameManager.Instance.player.GetComponent<CharacterStats>().currentHealth = GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth();
-        GameManager.Instance.player.GetComponent<CharacterStats>().isDead = false;
-        GameManager.Instance.player.GetComponent<Player>().SetIdle();
-        GameManager.Instance.player.GetComponent<Player_Movement>().ResumeMovement();
+        CharacterStats stats = playerObj.GetComponent<CharacterStats>();
+        stats.currentHealth = stats.GetMaxHealth();
+        stats.isDead = false;
+        playerObj.GetComponent<Player>().SetIdle();
+        playerObj.GetComponent<Player_Movement>().ResumeMovement();
+        playerObj.GetComponent<Player_Combat>()?.ResetAttack();
+        EnablePlayerHealthBar(playerObj);
+    }
+
+    private void EnablePlayerHealthBar(GameObject playerObj)
+    {
+        var hb = playerObj.GetComponentInChildren<HealthBar>(true);
+        if (hb != null)
+        {
+            hb.gameObject.SetActive(true);
+            hb.UpdateHealthUI();
+        }
     }
 
     private IEnumerator RisePlayer(Transform target, Vector3 end)
