@@ -69,9 +69,24 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LevelRoutine()
     {
+        bool playerDiedLastRound = true;
         for (currentRound = 0; currentRound < currentLevel.rounds.Count; currentRound++)
         {
-            SpawnPlayer();
+            if (playerDiedLastRound || currentRound == 0)
+            {
+                SpawnPlayer();
+                MovePlayerToEndPoint();
+                yield return new WaitUntil(() =>
+                    Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
+                FaceFirstEnemy();
+            }
+            else
+            {
+                FaceFirstEnemy();
+            }
+
+            playerDiedLastRound = false;
+
             SpawnEnemies(currentLevel.rounds[currentRound]);
             UIManager.Instance?.UpdateRound(currentRound + 1, currentLevel.rounds.Count);
             yield return StartCoroutine(CountdownRoutine());
@@ -81,16 +96,24 @@ public class LevelManager : MonoBehaviour
             bool playerDead = GameManager.Instance.player == null || GameManager.Instance.player.GetComponent<CharacterStats>().isDead;
             if (playerDead)
             {
+                playerDiedLastRound = true;
                 lives--;
                 UIManager.Instance?.UpdateLives(lives);
                 if (lives <= 0) yield break;
                 RemoveRemainingEnemies();
                 yield return new WaitForSeconds(5f);
                 RespawnPlayer();
+                yield return new WaitUntil(() =>
+                    Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
             }
             else
             {
                 MovePlayerToEndPoint();
+                GameManager.Instance.player.GetComponent<CharacterStats>().currentHealth =
+                    GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth();
+                yield return new WaitUntil(() =>
+                    Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
+                FaceFirstEnemy();
                 yield return new WaitForSeconds(5f);
             }
         }
@@ -99,6 +122,8 @@ public class LevelManager : MonoBehaviour
         {
             ES3.Save($"LevelUnlocked_{currentLevelIndex + 1}", true);
         }
+
+        yield return StartCoroutine(ReturnToMenuRoutine());
     }
 
     private IEnumerator CountdownRoutine()
@@ -127,10 +152,11 @@ public class LevelManager : MonoBehaviour
     private void RespawnPlayer()
     {
         if (GameManager.Instance.player == null) return;
-        Vector3 start = endPoint.position - Vector3.up * 2f;
-        GameManager.Instance.player.transform.position = start;
+        NavMeshAgent agent = GameManager.Instance.player.GetComponent<NavMeshAgent>();
+        agent.Warp(playerSpawnPoint.position);
         GameManager.Instance.player.SetActive(true);
-        StartCoroutine(RisePlayer(GameManager.Instance.player.transform, endPoint.position));
+        agent.isStopped = false;
+        agent.SetDestination(endPoint.position);
         GameManager.Instance.player.GetComponent<CharacterStats>().currentHealth = GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth();
         GameManager.Instance.player.GetComponent<CharacterStats>().isDead = false;
         GameManager.Instance.player.GetComponent<Player>().SetIdle();
@@ -181,5 +207,29 @@ public class LevelManager : MonoBehaviour
         NavMeshAgent agent = GameManager.Instance.player.GetComponent<NavMeshAgent>();
         agent.isStopped = false;
         agent.SetDestination(endPoint.position);
+    }
+
+    private void FaceFirstEnemy()
+    {
+        if (GameManager.Instance.player == null) return;
+        if (enemySpawnPoints.Count == 0) return;
+        Transform lookTarget = enemySpawnPoints[0];
+        GameManager.Instance.player.transform.rotation =
+            GameManager.Instance.player.GetComponent<Player>()
+                .FaceTarget(lookTarget.position);
+    }
+
+    private IEnumerator ReturnToMenuRoutine()
+    {
+        float timer = 5f;
+        UIManager.Instance?.EnableCountdown();
+        while (timer > 0f)
+        {
+            UIManager.Instance?.UpdateCountdown(Mathf.CeilToInt(timer));
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        UIManager.Instance?.UpdateCountdownZero();
+        SceneManager.LoadScene("MainMenu");
     }
 }
