@@ -144,9 +144,9 @@ public class LevelManager : MonoBehaviour
     {
         if (GameManager.Instance.player == null) return;
         var playerObj = GameManager.Instance.player;
+        playerObj.SetActive(true);
         NavMeshAgent agent = playerObj.GetComponent<NavMeshAgent>();
         agent.Warp(playerSpawnPoint.position);
-        playerObj.SetActive(true);
         CharacterStats stats = playerObj.GetComponent<CharacterStats>();
         stats.currentHealth = stats.GetMaxHealth();
         stats.isDead = false;

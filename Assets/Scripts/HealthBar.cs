@@ -14,10 +14,15 @@ public class HealthBar : MonoBehaviour
 
     private bool isDead = false;
 
+    private void Awake()
+    {
+        myStats = GetComponentInParent<CharacterStats>();
+    }
+
     private void Start()
     {
         slider = GetComponentInChildren<Slider>();
-        myStats = GetComponentInParent<CharacterStats>();
+
         enemy = GetComponentInParent<Enemy>();
         player = GetComponentInParent<Player>();
         healthText = GetComponentInChildren<TextMeshProUGUI>();
