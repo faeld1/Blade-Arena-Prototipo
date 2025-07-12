@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     {
         battleOngoing = false; // stop battle loop
         OnPlayerDeath?.Invoke();
-        player = null; // enemies no longer have a valid reference
+        //player = null; // enemies no longer have a valid reference
     }
 
     private void Awake()

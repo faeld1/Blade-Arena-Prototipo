@@ -152,9 +152,9 @@ public class LevelManager : MonoBehaviour
     private void RespawnPlayer()
     {
         if (GameManager.Instance.player == null) return;
+        GameManager.Instance.player.SetActive(true);
         NavMeshAgent agent = GameManager.Instance.player.GetComponent<NavMeshAgent>();
         agent.Warp(playerSpawnPoint.position);
-        GameManager.Instance.player.SetActive(true);
         agent.isStopped = false;
         agent.SetDestination(endPoint.position);
         GameManager.Instance.player.GetComponent<CharacterStats>().currentHealth = GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth();
