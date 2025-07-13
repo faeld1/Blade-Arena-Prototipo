@@ -126,6 +126,7 @@ public class LevelManager : MonoBehaviour
             else
             {
                 MovePlayerToEndPoint();
+                var intermission = StartCoroutine(IntermissionRoutine());
                 yield return new WaitUntil(() =>
                     Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
                 FaceFirstEnemy();
@@ -136,7 +137,8 @@ public class LevelManager : MonoBehaviour
 
                 GameManager.Instance.player.GetComponent<Player_Stats>().UpdateHealth(); // Update health bar
 
-                yield return StartCoroutine(IntermissionRoutine());
+                //yield return StartCoroutine(IntermissionRoutine());
+                yield return intermission;
             }
         }
 
