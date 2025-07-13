@@ -78,12 +78,14 @@ public class LevelManager : MonoBehaviour
                 MovePlayerToEndPoint();
                 yield return new WaitUntil(() =>
                     Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
-                GameManager.Instance.player.GetComponent<Player_Movement>().StopMovement();
                 FaceFirstEnemy();
+                Debug.Log("FaceFirstEnemy sendo chamado no primeiro If");
+                GameManager.Instance.player.GetComponent<Player_Movement>().StopMovement();
             }
             else
             {
                 FaceFirstEnemy();
+                Debug.Log("FaceFirstEnemy sendo chamado no else");
             }
 
             playerDiedLastRound = false;
@@ -113,12 +115,14 @@ public class LevelManager : MonoBehaviour
                 MovePlayerToEndPoint();
                 yield return new WaitUntil(() =>
                     Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
+                FaceFirstEnemy();
+                Debug.Log("FaceFirstEnemy sendo chamado no else final");
                 GameManager.Instance.player.GetComponent<Player_Movement>().StopMovement();
                 GameManager.Instance.player.GetComponent<CharacterStats>().currentHealth =
                     GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth(); // Reset health
 
                 GameManager.Instance.player.GetComponent<Player_Stats>().UpdateHealth(); // Update health bar
-                FaceFirstEnemy();
+                
                 yield return new WaitForSeconds(5f);
             }
         }
