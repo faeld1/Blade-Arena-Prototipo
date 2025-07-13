@@ -111,12 +111,15 @@ public class LevelManager : MonoBehaviour
                 lives--;
                 UIManager.Instance?.UpdateLives(lives);
                 if (lives <= 0) yield break;
+                yield return new WaitForSeconds(3f);
                 RemoveRemainingEnemies();
-                yield return new WaitForSeconds(5f);
+                yield return new WaitForSeconds(2f);
                 RespawnPlayer();
                 yield return new WaitUntil(() =>
                     Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
                 playerDiedLastRound = false;
+                if (currentRound == currentLevel.rounds.Count - 1)
+                    currentRound--;
             }
             else
             {
