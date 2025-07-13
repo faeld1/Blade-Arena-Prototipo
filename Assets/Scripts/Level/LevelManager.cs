@@ -115,7 +115,9 @@ public class LevelManager : MonoBehaviour
                     Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
                 GameManager.Instance.player.GetComponent<Player_Movement>().StopMovement();
                 GameManager.Instance.player.GetComponent<CharacterStats>().currentHealth =
-                    GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth();
+                    GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth(); // Reset health
+
+                GameManager.Instance.player.GetComponent<Player_Stats>().UpdateHealth(); // Update health bar
                 FaceFirstEnemy();
                 yield return new WaitForSeconds(5f);
             }
