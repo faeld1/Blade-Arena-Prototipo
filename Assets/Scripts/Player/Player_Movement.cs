@@ -7,6 +7,8 @@ public class Player_Movement : MonoBehaviour
     private NavMeshAgent agent;
     private Transform currentTarget;
     private Player player;
+    private Transform lookTarget;
+    private bool facingTarget;
 
     private void Start()
     {
@@ -22,6 +24,11 @@ public class Player_Movement : MonoBehaviour
         if (currentTarget != null && !agent.isStopped && GameManager.Instance.battleOngoing == true)
         {
             agent.SetDestination(currentTarget.position);
+        }
+
+        if (facingTarget && lookTarget != null)
+        {
+            transform.rotation = player.FaceTarget(lookTarget.position);
         }
     }
 
@@ -43,6 +50,18 @@ public class Player_Movement : MonoBehaviour
     public bool IsMoving()
     {
         return agent.velocity.magnitude > 0.1f;
+    }
+
+    public void FaceTarget(Transform target)
+    {
+        lookTarget = target;
+        facingTarget = target != null;
+    }
+
+    public void StopFacingTarget()
+    {
+        lookTarget = null;
+        facingTarget = false;
     }
 
 }

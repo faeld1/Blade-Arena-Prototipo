@@ -94,6 +94,7 @@ public class LevelManager : MonoBehaviour
             UIManager.Instance?.UpdateRound(currentRound + 1, currentLevel.rounds.Count);
             yield return StartCoroutine(CountdownRoutine());
             GameManager.Instance?.StartBattle();
+            GameManager.Instance.player.GetComponent<Player_Movement>().StopFacingTarget();
             yield return new WaitUntil(() => GameManager.Instance.battleOngoing == false);
 
             bool playerDead = GameManager.Instance.player == null || GameManager.Instance.player.GetComponent<CharacterStats>().isDead;
@@ -241,13 +242,8 @@ public class LevelManager : MonoBehaviour
         if (GameManager.Instance.player == null) return;
         if (enemySpawnPoints.Count == 0) return;
         Transform lookTarget = enemySpawnPoints[0];
-        Vector3 direction = lookTarget.position - GameManager.Instance.player.transform.position;
-        if (direction.sqrMagnitude < 0.001f) return;
-
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        Vector3 currentEuler = GameManager.Instance.player.transform.rotation.eulerAngles;
-        GameManager.Instance.player.transform.rotation =
-            Quaternion.Euler(currentEuler.x, lookRotation.eulerAngles.y, currentEuler.z);
+        var movement = GameManager.Instance.player.GetComponent<Player_Movement>();
+        movement.FaceTarget(lookTarget);
     }
 
     private IEnumerator ReturnToMenuRoutine()
