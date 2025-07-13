@@ -40,7 +40,11 @@ public class Player_Stats : CharacterStats
 
         if (skill.data.healthBonus != 0)
         {
+            float previousMax = GetMaxHealth();
+            bool wasFull = Mathf.Approximately(currentHealth, previousMax);
             resources.maxHealth.AddModifier(skill.data.healthBonus * skill.level, source);
+            if (wasFull)
+                currentHealth = GetMaxHealth();
             UpdateHealth();
         }
 
