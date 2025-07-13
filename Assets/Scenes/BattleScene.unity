@@ -4012,6 +4012,7 @@ MonoBehaviour:
   xpAmount: 5
   goldCost: 5
   xpButton: {fileID: 562452429}
+  skipCountdownButton: {fileID: 934818266}
   activeSkillCountText: {fileID: 1489891673}
   levelText: {fileID: 1551011778}
   xpText: {fileID: 1327556554}
