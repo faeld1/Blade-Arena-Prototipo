@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Transform playerSpawnPoint;
     [SerializeField] private Transform endPoint;
     [SerializeField] private List<Transform> enemySpawnPoints = new List<Transform>();
-    [SerializeField] private float countdownDuration = 5f;
+    [SerializeField] private float countdownDuration = 15f;
     [SerializeField] private int startingLives = 3;
 
     private bool skipCountdownRequested = false;
@@ -110,7 +110,11 @@ public class LevelManager : MonoBehaviour
                 playerDiedLastRound = true;
                 lives--;
                 UIManager.Instance?.UpdateLives(lives);
-                if (lives <= 0) yield break;
+                if (lives <= 0)
+                {
+                    yield return StartCoroutine(ReturnToMenuAfterDelay(3f));
+                    yield break;
+                }
                 yield return new WaitForSeconds(3f);
                 RemoveRemainingEnemies();
                 yield return new WaitForSeconds(2f);
@@ -133,8 +137,8 @@ public class LevelManager : MonoBehaviour
                     GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth(); // Reset health
 
                 GameManager.Instance.player.GetComponent<Player_Stats>().UpdateHealth(); // Update health bar
-                
-                yield return new WaitForSeconds(5f);
+
+                yield return StartCoroutine(IntermissionRoutine());
             }
         }
 
@@ -165,6 +169,25 @@ public class LevelManager : MonoBehaviour
         }
         UIManager.Instance?.ShowSkipCountdownButton(false);
         UIManager.Instance?.UpdateCountdownZero();
+    }
+
+    private IEnumerator IntermissionRoutine()
+    {
+        UIManager.Instance?.EnableCountdown();
+        float timer = 5f;
+        while (timer > 0f)
+        {
+            UIManager.Instance?.UpdateCountdown(Mathf.CeilToInt(timer));
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        UIManager.Instance?.UpdateCountdownZero();
+    }
+
+    private IEnumerator ReturnToMenuAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene("MainMenu");
     }
 
     private void SpawnPlayer()
