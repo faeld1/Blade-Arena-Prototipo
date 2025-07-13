@@ -241,9 +241,13 @@ public class LevelManager : MonoBehaviour
         if (GameManager.Instance.player == null) return;
         if (enemySpawnPoints.Count == 0) return;
         Transform lookTarget = enemySpawnPoints[0];
+        Vector3 direction = lookTarget.position - GameManager.Instance.player.transform.position;
+        if (direction.sqrMagnitude < 0.001f) return;
+
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        Vector3 currentEuler = GameManager.Instance.player.transform.rotation.eulerAngles;
         GameManager.Instance.player.transform.rotation =
-            GameManager.Instance.player.GetComponent<Player>()
-                .FaceTarget(lookTarget.position);
+            Quaternion.Euler(currentEuler.x, lookRotation.eulerAngles.y, currentEuler.z);
     }
 
     private IEnumerator ReturnToMenuRoutine()
