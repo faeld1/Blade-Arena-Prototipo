@@ -16,6 +16,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float countdownDuration = 5f;
     [SerializeField] private int startingLives = 3;
 
+    private bool skipCountdownRequested = false;
+
     private int currentRound = 0;
     private int lives;
     private int currentLevelIndex = -1;
@@ -46,6 +48,11 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         lives = startingLives;
+    }
+
+    public void SkipCountdown()
+    {
+        skipCountdownRequested = true;
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -139,13 +146,21 @@ public class LevelManager : MonoBehaviour
     private IEnumerator CountdownRoutine()
     {
         UIManager.Instance?.EnableCountdown();
+        UIManager.Instance?.ShowSkipCountdownButton(true);
         float timer = countdownDuration;
+        skipCountdownRequested = false;
         while (timer > 0f)
         {
+            if (skipCountdownRequested && timer > 1f)
+            {
+                timer = 1f;
+                skipCountdownRequested = false;
+            }
             UIManager.Instance?.UpdateCountdown(Mathf.CeilToInt(timer));
             timer -= Time.deltaTime;
             yield return null;
         }
+        UIManager.Instance?.ShowSkipCountdownButton(false);
         UIManager.Instance?.UpdateCountdownZero();
     }
 

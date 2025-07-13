@@ -12,6 +12,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private int goldCost = 1;
     [SerializeField] private Button xpButton;
 
+    [Header("Skip Countdown Settings")]
+    [SerializeField] private Button skipCountdownButton;
+
     [Header("Active Skill Count")]
     [SerializeField] private TextMeshProUGUI activeSkillCountText;
 
@@ -31,6 +34,11 @@ public class UIManager : MonoBehaviour
 
         if (xpButton != null)
             xpButton.onClick.AddListener(BuyXpButtonFuction);
+
+        if (skipCountdownButton != null)
+            skipCountdownButton.onClick.AddListener(SkipCountdownFunction);
+
+        ShowSkipCountdownButton(false);
 
     }
     private void Start()
@@ -118,6 +126,17 @@ public class UIManager : MonoBehaviour
     {
         if (livesText != null)
             livesText.text = value.ToString();
+    }
+
+    private void SkipCountdownFunction()
+    {
+        LevelManager.Instance?.SkipCountdown();
+    }
+
+    public void ShowSkipCountdownButton(bool show)
+    {
+        if (skipCountdownButton != null)
+            skipCountdownButton.gameObject.SetActive(show);
     }
 
 }
