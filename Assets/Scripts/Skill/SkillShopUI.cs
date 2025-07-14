@@ -57,6 +57,10 @@ public class SkillShopUI : MonoBehaviour
         if (index >= 0 && index < currentShopSkills.Count)
         {
             var skill = currentShopSkills[index];
+
+            if (SkillManager.Instance != null && SkillManager.Instance.IsSkillMaxLevel(skill))
+                return; // skill already at max level
+
             if (GameManager.Instance != null && GameManager.Instance.TrySpendGold(skill.cost))
             {
                 SkillManager.Instance.AddSkill(skill);

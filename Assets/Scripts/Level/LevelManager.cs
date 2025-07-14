@@ -81,6 +81,10 @@ public class LevelManager : MonoBehaviour
         for (currentRound = 0; currentRound < currentLevel.rounds.Count; currentRound++)
         {
             UIManager.Instance?.UpdateRound(currentRound + 1, currentLevel.rounds.Count);
+            if (currentRound > 0)
+            {
+                SkillManager.Instance?.skillShopUI?.RefreshShop();
+            }
             if (playerDiedLastRound || currentRound == 0)
             {
                 SpawnPlayer();
