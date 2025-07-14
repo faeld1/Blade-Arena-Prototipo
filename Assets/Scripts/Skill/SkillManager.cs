@@ -125,12 +125,16 @@ public class SkillManager : MonoBehaviour
     public int GetSkillLevel(SkillData skill)
     {
         var existing = activeSkills.Find(s => s.data == skill);
+        if (existing == null)
+            existing = reservedSkills.Find(s => s.data == skill);
         return existing?.level ?? 0;
     }
 
     public bool IsSkillMaxLevel(SkillData skill)
     {
         var existing = activeSkills.Find(s => s.data == skill);
+        if (existing == null)
+            existing = reservedSkills.Find(s => s.data == skill);
         return existing != null && existing.IsMaxLevel;
     }
 
