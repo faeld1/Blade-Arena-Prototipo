@@ -1114,7 +1114,8 @@ MonoBehaviour:
   playerSpawnPoint: {fileID: 0}
   endPoint: {fileID: 0}
   enemySpawnPoints: []
-  countdownDuration: 15
+  countdownDuration: 20
+  firstCountdownDuration: 25
   startingLives: 3
 --- !u!4 &1965359701
 Transform:

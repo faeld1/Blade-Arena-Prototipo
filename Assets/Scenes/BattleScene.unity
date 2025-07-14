@@ -4049,6 +4049,7 @@ GameObject:
   - component: {fileID: 1450705024}
   - component: {fileID: 1450705025}
   - component: {fileID: 1450705026}
+  - component: {fileID: 1450705027}
   m_Layer: 0
   m_Name: MANAGERS
   m_TagString: Untagged
@@ -4068,7 +4069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408736e4420404240a7e357524d8fbc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentGold: 50
+  currentGold: 5
   playerLevel: 3
   playerXP: 0
   xpToNextLevel: 000000000000000001000000050000000f000000140000001900000023000000280000002d000000
@@ -4157,6 +4158,7 @@ MonoBehaviour:
   countdownText: {fileID: 1089670435}
   roundText: {fileID: 465946523}
   livesText: {fileID: 599294230}
+  goldEarnsDisplay: {fileID: 1450705027}
 --- !u!114 &1450705026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4179,6 +4181,19 @@ MonoBehaviour:
   - {fileID: 207707430}
   - {fileID: 918271077}
   countdownDuration: 10
+--- !u!114 &1450705027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450705018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7280128e67f743c9a75780f56e3f2b4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 496304785}
 --- !u!1001 &1456427299
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class Enemy_Stats : CharacterStats
     protected override void Die()
     {
         base.Die();
-        GameManager.Instance?.AddGold(2);
+        //GameManager.Instance?.AddGold(2);
         enemy.Dead(); // Call the Dead method on the Enemy component when this character dies
     }
 }

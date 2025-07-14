@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour
     {
         currentGold += amount;
         OnGoldChanged?.Invoke(currentGold);
+        Debug.Log($"Adding {amount} gold. Current gold: {currentGold}");
     }
 
     public bool TrySpendGold(int amount)
@@ -107,6 +108,7 @@ public class GameManager : MonoBehaviour
         {
             currentGold -= amount;
             OnGoldChanged?.Invoke(currentGold);
+            Debug.Log($"Spent {amount} gold. Remaining gold: {currentGold}");
             return true;
         }
         return false;

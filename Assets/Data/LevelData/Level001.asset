@@ -22,3 +22,11 @@ MonoBehaviour:
     - {fileID: 8564704821382491036, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
     - {fileID: 8564704821382491036, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
     - {fileID: 8564704821382491036, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
+  - enemies:
+    - {fileID: 8564704821382491036, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
+    - {fileID: 8564704821382491036, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
+    - {fileID: 8564704821382491036, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
+  - enemies:
+    - {fileID: 8564704821382491036, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
+    - {fileID: 8564704821382491036, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}
+    - {fileID: 8564704821382491036, guid: 722da02a6fecbc345bb4a99abef208ec, type: 3}

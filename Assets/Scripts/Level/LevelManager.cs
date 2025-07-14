@@ -77,14 +77,14 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LevelRoutine()
     {
-        GameManager.Instance?.AddGold(5); // starting gold
+        //GameManager.Instance?.AddGold(5); // starting gold
         bool playerDiedLastRound = true;
         for (currentRound = 0; currentRound < currentLevel.rounds.Count; currentRound++)
         {
             UIManager.Instance?.UpdateRound(currentRound + 1, currentLevel.rounds.Count);
             if (currentRound > 0)
             {
-                SkillManager.Instance?.skillShopUI?.RefreshShop();
+                SkillManager.Instance?.skillShopUI?.RefreshShop(0);
             }
             if (playerDiedLastRound || currentRound == 0)
             {
@@ -204,6 +204,8 @@ public class LevelManager : MonoBehaviour
         }
         UIManager.Instance?.UpdateCountdownZero();
         UIManager.Instance?.HideGoldEarns();
+
+        Debug.Log(total + " gold earned this round.");
 
         GameManager.Instance?.AddGold(total);
     }

@@ -30,13 +30,14 @@ public class SkillShopUI : MonoBehaviour
 
     private void Start()
     {
-        refreshButton.onClick.AddListener(RefreshShop);
-        RefreshShop();
+        refreshButton.onClick.AddListener(RefreshShopButton);
+        RefreshShop(0);
     }
 
-    public void RefreshShop()
+    public void RefreshShop(int cost = 2)
     {
         if (lockToggle != null && lockToggle.isOn) return;
+        if(GameManager.Instance.GetCurrentGold() < 2) return; // <- verifica se tem gold suficiente para atualizar a loja
 
         currentShopSkills = GetRandomSkills(5);
 
@@ -47,9 +48,13 @@ public class SkillShopUI : MonoBehaviour
         }
 
         if (firstRefresh == true)
-            GameManager.Instance.TrySpendGold(2); // <- gasta 2 de gold para atualizar a loja
+            GameManager.Instance.TrySpendGold(cost); // <- gasta 2 de gold para atualizar a loja
 
         firstRefresh = true; // <- marca que a loja foi atualizada pelo menos uma vez
+    }
+    private void RefreshShopButton()
+    {
+        RefreshShop(2); // <- chama a funcao de atualizar loja com custo 2;
     }
 
     public void BuySkill(int index)
