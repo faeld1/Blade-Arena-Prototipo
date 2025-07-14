@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Transform endPoint;
     [SerializeField] private List<Transform> enemySpawnPoints = new List<Transform>();
     [SerializeField] private float countdownDuration = 15f;
+    [SerializeField] private float firstCountdownDuration = 20f;
     [SerializeField] private int startingLives = 3;
 
     private bool skipCountdownRequested = false;
@@ -79,6 +80,7 @@ public class LevelManager : MonoBehaviour
         bool playerDiedLastRound = true;
         for (currentRound = 0; currentRound < currentLevel.rounds.Count; currentRound++)
         {
+            UIManager.Instance?.UpdateRound(currentRound + 1, currentLevel.rounds.Count);
             if (playerDiedLastRound || currentRound == 0)
             {
                 SpawnPlayer();
@@ -96,8 +98,8 @@ public class LevelManager : MonoBehaviour
             playerDiedLastRound = false;
 
             SpawnEnemies(currentLevel.rounds[currentRound]);
-            UIManager.Instance?.UpdateRound(currentRound + 1, currentLevel.rounds.Count);
-            yield return StartCoroutine(CountdownRoutine());
+            float roundCountdown = currentRound == 0 ? firstCountdownDuration : countdownDuration;
+            yield return StartCoroutine(CountdownRoutine(roundCountdown));
             GameManager.Instance?.StartBattle();
             GameManager.Instance.player.GetComponent<Player_Movement>().StopFacingTarget();
             yield return new WaitUntil(() => GameManager.Instance.battleOngoing == false);
@@ -113,6 +115,7 @@ public class LevelManager : MonoBehaviour
                     yield return StartCoroutine(ReturnToMenuAfterDelay(3f));
                     yield break;
                 }
+                var respawnTimer = StartCoroutine(IntermissionRoutine());
                 yield return new WaitForSeconds(3f);
                 RemoveRemainingEnemies();
                 yield return new WaitForSeconds(2f);
@@ -122,6 +125,7 @@ public class LevelManager : MonoBehaviour
                 playerDiedLastRound = false;
                 if (currentRound == currentLevel.rounds.Count - 1)
                     currentRound--;
+                yield return respawnTimer;
             }
             else
             {
@@ -150,11 +154,11 @@ public class LevelManager : MonoBehaviour
         yield return StartCoroutine(ReturnToMenuRoutine());
     }
 
-    private IEnumerator CountdownRoutine()
+    private IEnumerator CountdownRoutine(float duration)
     {
         UIManager.Instance?.EnableCountdown();
         UIManager.Instance?.ShowSkipCountdownButton(true);
-        float timer = countdownDuration;
+        float timer = duration;
         skipCountdownRequested = false;
         while (timer > 0f)
         {
