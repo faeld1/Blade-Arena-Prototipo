@@ -26,6 +26,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private TextMeshProUGUI roundText;
     [SerializeField] private TextMeshProUGUI livesText;
+    [Header("Gold Earns")]
+    [SerializeField] private GoldEarnsDisplay goldEarnsDisplay;
 
     private void Awake()
     {
@@ -39,6 +41,7 @@ public class UIManager : MonoBehaviour
             skipCountdownButton.onClick.AddListener(SkipCountdownFunction);
 
         ShowSkipCountdownButton(false);
+        HideGoldEarns();
 
     }
     private void Start()
@@ -137,6 +140,18 @@ public class UIManager : MonoBehaviour
     {
         if (skipCountdownButton != null)
             skipCountdownButton.gameObject.SetActive(show);
+    }
+
+    public void ShowGoldEarns(string message)
+    {
+        if (goldEarnsDisplay != null)
+            goldEarnsDisplay.ShowMessage(message);
+    }
+
+    public void HideGoldEarns()
+    {
+        if (goldEarnsDisplay != null)
+            goldEarnsDisplay.Hide();
     }
 
 }

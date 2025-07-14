@@ -77,6 +77,7 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LevelRoutine()
     {
+        GameManager.Instance?.AddGold(5); // starting gold
         bool playerDiedLastRound = true;
         for (currentRound = 0; currentRound < currentLevel.rounds.Count; currentRound++)
         {
@@ -119,7 +120,7 @@ public class LevelManager : MonoBehaviour
                     yield return StartCoroutine(ReturnToMenuAfterDelay(3f));
                     yield break;
                 }
-                var respawnTimer = StartCoroutine(IntermissionRoutine());
+                var respawnTimer = StartCoroutine(IntermissionRoutine(false));
                 yield return new WaitForSeconds(3f);
                 RemoveRemainingEnemies();
                 yield return new WaitForSeconds(2f);
@@ -134,7 +135,7 @@ public class LevelManager : MonoBehaviour
             else
             {
                 MovePlayerToEndPoint();
-                var intermission = StartCoroutine(IntermissionRoutine());
+                var intermission = StartCoroutine(IntermissionRoutine(true));
                 yield return new WaitUntil(() =>
                     Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
                 FaceFirstEnemy();
@@ -179,8 +180,20 @@ public class LevelManager : MonoBehaviour
         UIManager.Instance?.UpdateCountdownZero();
     }
 
-    private IEnumerator IntermissionRoutine()
+    private IEnumerator IntermissionRoutine(bool won)
     {
+        int baseGold = Mathf.Clamp(4 + currentRound, 4, 7);
+        int interest = Mathf.Clamp(GameManager.Instance.GetCurrentGold() / 10, 0, 3);
+        int winGold = won ? 1 : 0;
+        int total = baseGold + interest + winGold;
+
+        string message = $"+{baseGold} DE GOLD BASE\n";
+        if (interest > 0) message += $"+{interest} DE JUROS\n";
+        if (won) message += "+1 POR VITORIA\n";
+        message += $"\nTOTAL: {total} DE GOLD";
+
+        UIManager.Instance?.ShowGoldEarns(message);
+
         UIManager.Instance?.EnableCountdown();
         float timer = 5f;
         while (timer > 0f)
@@ -190,6 +203,9 @@ public class LevelManager : MonoBehaviour
             yield return null;
         }
         UIManager.Instance?.UpdateCountdownZero();
+        UIManager.Instance?.HideGoldEarns();
+
+        GameManager.Instance?.AddGold(total);
     }
 
     private IEnumerator ReturnToMenuAfterDelay(float delay)
