@@ -69,6 +69,12 @@ MonoBehaviour:
   nameText: {fileID: 5023885912191492014}
   levelText: {fileID: 0}
   descriptionText: {fileID: 917422039078735570}
+  stars:
+  - {fileID: 8844207676177913789}
+  - {fileID: 3122427248768503188}
+  - {fileID: 6272402013913377057}
+  - {fileID: 1886472339199107601}
+  - {fileID: 8080425220405988172}
 --- !u!114 &-3807611402447955116
 MonoBehaviour:
   m_ObjectHideFlags: 0

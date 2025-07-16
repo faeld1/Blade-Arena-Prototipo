@@ -44,6 +44,14 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler
                 if (stars[i] != null)
                 {
                     stars[i].SetActive(i < instance.level);
+                    if (instance.level == stars.Length)
+                    {
+                        stars[i].GetComponent<Image>().color = new Color (1f,0.85f,0.05f); // Highlight last star if max level
+                    }
+                    else
+                    {
+                        stars[i].GetComponent<Image>().color = Color.white; // Default color for other stars
+                    }
                 }
             }
         }
