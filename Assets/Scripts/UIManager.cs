@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Active Skill Count")]
     [SerializeField] private TextMeshProUGUI activeSkillCountText;
+    [SerializeField] private TextMeshProUGUI desactiveSkillCountText;
 
     [Header("LevelXP Settings")]
     [SerializeField] private TextMeshProUGUI levelText;
@@ -100,6 +101,7 @@ public class UIManager : MonoBehaviour
     public void UpdateActiveSkillCount()
     {
         activeSkillCountText.text = $"{SkillManager.Instance.activeSkills.Count} / {SkillManager.Instance.maxActiveSlots}";
+        desactiveSkillCountText.text = $"{SkillManager.Instance.reservedSkills.Count} / 4";
     }
 
     public void UpdateCountdown(int value)

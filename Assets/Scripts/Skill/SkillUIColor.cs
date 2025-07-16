@@ -7,15 +7,15 @@ public static class SkillUIColor
         switch (rarity)
         {
             case SkillRarity.Common:
-                return Color.white;
+                return new Color(1f, 1f, 1f); // white
             case SkillRarity.Uncommon:
-                return Color.green;
+                return new Color(0.5f, 1f, 0.5f); // green
             case SkillRarity.Rare:
-                return Color.blue;
+                return new Color(0.5f, 0.5f, 1f); // blue
             case SkillRarity.Epic:
-                return new Color(0.5f, 0f, 0.5f); // purple
+                return new Color(0.85f, 0f, 0.85f); // purple
             case SkillRarity.Legendary:
-                return new Color(1f, 0.84f, 0f); // gold
+                return new Color(1f, 0.9f, 0.4f); // gold
             default:
                 return Color.white;
         }

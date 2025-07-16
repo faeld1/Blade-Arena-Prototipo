@@ -27,6 +27,17 @@ public class SkillSlotUI : MonoBehaviour
         index = idx;
         shopUI = shop;
 
+        int skillValue = 0;
+
+        if (skill.attackBonus != 0)
+            skillValue = skill.attackBonus;
+        else if (skill.defenseBonus != 0)
+            skillValue = skill.defenseBonus;
+        else if (skill.speedBonus != 0)
+            skillValue = skill.speedBonus;
+        else if (skill.healthBonus != 0)
+            skillValue = skill.healthBonus;
+
         if (iconImage != null)
             iconImage.sprite = skill.icon;
 
@@ -41,9 +52,7 @@ public class SkillSlotUI : MonoBehaviour
 
         if (descriptionText != null)
         {
-            int level = SkillManager.Instance.GetSkillLevel(skill);
-            descriptionText.text =
-                $"Nível {level + 1} → ATK +{skill.attackBonus} | DEF +{skill.defenseBonus} | HP +{skill.healthBonus}";
+            descriptionText.text = $"Increases {skill.description} by {skillValue}";
         }
     }
 

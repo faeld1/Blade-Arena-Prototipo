@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Passive_Damage
   m_EditorClassIdentifier: 
   skillName: Damage
-  description: Increase 10 damage
-  icon: {fileID: 998750072, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
+  description: damage
+  icon: {fileID: 1526008332, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   type: 0
   rarity: 0
   attackBonus: 10
   defenseBonus: 0
   speedBonus: 0
+  healthBonus: 0
   cost: 1
   maxLevel: 5

@@ -205,8 +205,6 @@ public class LevelManager : MonoBehaviour
         UIManager.Instance?.UpdateCountdownZero();
         UIManager.Instance?.HideGoldEarns();
 
-        Debug.Log(total + " gold earned this round.");
-
         GameManager.Instance?.AddGold(total);
     }
 

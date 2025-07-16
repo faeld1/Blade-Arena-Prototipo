@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Passive_Speed_Lv3
   m_EditorClassIdentifier: 
   skillName: Speed
-  description: Increase 1 Speed
-  icon: {fileID: -1211589979, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
+  description: Speed
+  icon: {fileID: 733483707, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   type: 0
   rarity: 2
   attackBonus: 0
