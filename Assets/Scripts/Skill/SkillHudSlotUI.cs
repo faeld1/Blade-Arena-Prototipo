@@ -37,6 +37,17 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler
         if (levelText) levelText.text = "Lv. " + instance.level;
         if (descriptionText) descriptionText.text = $"Increases {instance.data.description} by {skillValue}";
 
+        if (stars != null)
+        {
+            for (int i = 0; i < stars.Length; i++)
+            {
+                if (stars[i] != null)
+                {
+                    stars[i].SetActive(i < instance.level);
+                }
+            }
+        }
+
         GetComponent<SkillDragHandler>().Initialize(this);
     }
 
