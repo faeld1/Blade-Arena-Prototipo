@@ -138,6 +138,17 @@ public class SkillManager : MonoBehaviour
         return existing != null && existing.IsMaxLevel;
     }
 
+    public void SellSkill(SkillInstance skill)
+    {
+        if (activeSkills.Remove(skill) || reservedSkills.Remove(skill))
+        {
+            GameManager.Instance?.AddGold(skill.data.cost);
+            ReapplyBonuses();
+            skillHUDController.UpdateHUD();
+            UIManager.Instance?.UpdateActiveSkillCount();
+        }
+    }
+
     public void ReapplyBonuses()
     {
         var playerStats = GameManager.Instance?.player?.GetComponent<Player_Stats>();
@@ -151,6 +162,8 @@ public class SkillManager : MonoBehaviour
 
         foreach (var skill in activeSkills)
             playerStats.ApplySkillModifier(skill);
+
+        PlayerStatsHUD.Instance?.UpdateStats();
     }
 
     public void OpenCloseShop()
