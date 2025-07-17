@@ -30,6 +30,11 @@ public class SkillDetailUI : MonoBehaviour
             sellButton.onClick.AddListener(SellCurrentSkill);
     }
 
+    private void Start()
+    {
+        Hide();
+    }
+
     public void Show(SkillInstance skill)
     {
         currentSkill = skill;
@@ -68,6 +73,7 @@ public class SkillDetailUI : MonoBehaviour
                     if (r.gameObject.GetComponent<SkillHudSlotUI>() != null)
                         return;
                 }
+                Debug.Log("Clicked outside skill panel, hiding detail UI.");
                 Hide();
             }
         }

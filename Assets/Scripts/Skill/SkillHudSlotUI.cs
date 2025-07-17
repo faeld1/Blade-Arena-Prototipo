@@ -76,5 +76,6 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         SkillDetailUI.Instance?.Show(instance);
+        Debug.Log("Clicked on skill: " + instance.data.skillName);
     }
 }
