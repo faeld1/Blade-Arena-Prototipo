@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class SkillDetailUI : MonoBehaviour
 {
@@ -12,11 +14,10 @@ public class SkillDetailUI : MonoBehaviour
     [Header("Skill UI")]
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private GameObject[] stars;
     [SerializeField] private Button sellButton;
-    [SerializeField] private Button backgroundButton;
+    [SerializeField] private TextMeshProUGUI sellPriceText;
 
     private SkillInstance currentSkill;
 
@@ -27,8 +28,6 @@ public class SkillDetailUI : MonoBehaviour
 
         if (sellButton != null)
             sellButton.onClick.AddListener(SellCurrentSkill);
-        if (backgroundButton != null)
-            backgroundButton.onClick.AddListener(Hide);
     }
 
     public void Show(SkillInstance skill)
@@ -53,11 +52,31 @@ public class SkillDetailUI : MonoBehaviour
         Hide();
     }
 
+    private void Update()
+    {
+        if (skillPanel != null && skillPanel.activeSelf && Input.GetMouseButtonDown(0))
+        {
+            RectTransform rect = skillPanel.GetComponent<RectTransform>();
+            if (!RectTransformUtility.RectangleContainsScreenPoint(rect, Input.mousePosition, null))
+            {
+                // If clicking on another skill, it will reopen via its own handler
+                PointerEventData data = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+                List<RaycastResult> results = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(data, results);
+                foreach (var r in results)
+                {
+                    if (r.gameObject.GetComponent<SkillHudSlotUI>() != null)
+                        return;
+                }
+                Hide();
+            }
+        }
+    }
+
     private void UpdateUI(SkillInstance skill)
     {
         if (iconImage != null) iconImage.sprite = skill.data.icon;
         if (nameText != null) nameText.text = skill.data.skillName;
-        if (levelText != null) levelText.text = "Lv. " + skill.level;
 
         int value = 0;
         if (skill.data.attackBonus != 0)
@@ -71,6 +90,9 @@ public class SkillDetailUI : MonoBehaviour
 
         if (descriptionText != null)
             descriptionText.text = $"Increases {skill.data.description} by {value}";
+
+        if (sellPriceText != null)
+            sellPriceText.text = (skill.data.cost * skill.level).ToString();
 
         if (stars != null)
         {

@@ -142,7 +142,7 @@ public class SkillManager : MonoBehaviour
     {
         if (activeSkills.Remove(skill) || reservedSkills.Remove(skill))
         {
-            GameManager.Instance?.AddGold(skill.data.cost);
+            GameManager.Instance?.AddGold(skill.data.cost * skill.level);
             ReapplyBonuses();
             skillHUDController.UpdateHUD();
             UIManager.Instance?.UpdateActiveSkillCount();
