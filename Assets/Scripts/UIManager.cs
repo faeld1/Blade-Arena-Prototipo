@@ -7,9 +7,13 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+    [Header("Gold UI")]
+    [SerializeField] private TextMeshProUGUI goldText;
+
     [Header("XP Button Settings")]
-    [SerializeField] private int xpAmount = 1;
-    [SerializeField] private int goldCost = 1;
+    [SerializeField] private int xpAmount = 5;
+    [SerializeField] private int goldCost = 5;
+    [SerializeField] private GameObject goldCostParent;
     [SerializeField] private Button xpButton;
 
     [Header("Skip Countdown Settings")]
@@ -41,6 +45,10 @@ public class UIManager : MonoBehaviour
         if (skipCountdownButton != null)
             skipCountdownButton.onClick.AddListener(SkipCountdownFunction);
 
+        if (goldText == null)
+            goldText = GetComponent<TextMeshProUGUI>();
+        UpdateGold(GameManager.Instance ? GameManager.Instance.GetCurrentGold() : 0);
+
         ShowSkipCountdownButton(false);
         HideGoldEarns();
 
@@ -56,12 +64,15 @@ public class UIManager : MonoBehaviour
         UpdateDisplayLevelXP(GameManager.Instance ? GameManager.Instance.playerLevel : 0,
                       GameManager.Instance ? GameManager.Instance.playerXP : 0,
                       GameManager.Instance ? GameManager.Instance.xpToNextLevel[Mathf.Clamp(GameManager.Instance.playerLevel, 0, GameManager.Instance.xpToNextLevel.Length - 1)] : 0);
+
+        GameManager.OnGoldChanged += UpdateGold;
     }
 
     private void OnDisable()
     {
         GameManager.OnXPChanged -= UpdateDisplayLevelXP;
         GameManager.OnLevelUp -= LevelUp;
+        GameManager.OnGoldChanged -= UpdateGold;
     }
 
     private void LevelUp(int level)
@@ -79,6 +90,12 @@ public class UIManager : MonoBehaviour
         {
             if (toNext <= 0) toNext = 0;
             xpText.text = $"XP {xp} / {toNext}";
+
+            if (level == 10)
+            {
+                xpText.text = "";
+                goldCostParent.SetActive(false);
+            }
         }
         if(levelText != null)
         {
@@ -92,6 +109,11 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.BuyXP(xpAmount, goldCost);
+
+            if (GameManager.Instance.playerLevel == 10)
+            {
+                xpButton.interactable = false;
+            }
         }
 
         UpdateDisplayLevelXP(GameManager.Instance.playerLevel,
@@ -154,6 +176,12 @@ public class UIManager : MonoBehaviour
     {
         if (goldEarnsDisplay != null)
             goldEarnsDisplay.Hide();
+    }
+
+    private void UpdateGold(int value)
+    {
+        if (goldText != null)
+            goldText.text = value.ToString();
     }
 
 }

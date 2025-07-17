@@ -66,6 +66,11 @@ public class Player_Stats : CharacterStats
         offense.attackSpeed.RemoveModifier(source);
         defense.armor.RemoveModifier(source);
 
+        if(currentHealth > GetMaxHealth())
+            currentHealth = GetMaxHealth(); // Ensure current health does not exceed max health after removing modifiers
+
+        UpdateHealth();
+
         UpdateAttackAnimationSpeed();
     }
 
