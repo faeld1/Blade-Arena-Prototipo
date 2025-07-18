@@ -110,7 +110,7 @@ public class LevelManager : MonoBehaviour
             yield return new WaitUntil(() => GameManager.Instance.battleOngoing == false);
 
             bool playerDead = GameManager.Instance.player == null || GameManager.Instance.player.GetComponent<CharacterStats>().isDead;
-            if (playerDead)
+            if (playerDead) // Caso o Player tenha morrido na rodada
             {
                 playerDiedLastRound = true;
                 lives--;
@@ -131,7 +131,7 @@ public class LevelManager : MonoBehaviour
                     currentRound--;
                 yield return respawnTimer;
             }
-            else
+            else //Caso o Player tenha vencido a rodada
             {
                 MovePlayerToEndPoint();
                 var intermission = StartCoroutine(IntermissionRoutine(true));
@@ -330,6 +330,7 @@ public class LevelManager : MonoBehaviour
         Transform lookTarget = enemySpawnPoints[0];
         var movement = GameManager.Instance.player.GetComponent<Player_Movement>();
         movement.FaceTarget(lookTarget);
+        Debug.Log("FaceFirstEnemy sendo chamado");
     }
 
     private IEnumerator ReturnToMenuRoutine()

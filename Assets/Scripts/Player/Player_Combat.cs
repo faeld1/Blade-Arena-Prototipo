@@ -10,7 +10,7 @@ public class Player_Combat : MonoBehaviour
     private CharacterStats stats;
     private Player_Movement movement;
     private Player player;
-    private AIPath agent;
+    private RichAI agent;
     private bool isAttacking = false;
 
     private Enemy currentTarget;
@@ -24,7 +24,7 @@ public class Player_Combat : MonoBehaviour
     }
     private void Start()
     {
-        agent = GetComponent<AIPath>();
+        agent = GetComponent<RichAI>();
         stats = GetComponent<CharacterStats>();
         movement = GetComponent<Player_Movement>();
         player = GetComponent<Player>();
