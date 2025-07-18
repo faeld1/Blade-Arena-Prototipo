@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.AI;
+using Pathfinding;
 
 public class MoveState_Melee : EnemyState
 {
@@ -17,7 +17,8 @@ public class MoveState_Melee : EnemyState
         base.Enter();
 
         destination = enemy.GetPatrolDestination(); // Get the patrol destination from the enemy base
-        enemy.agent.SetDestination(destination);
+        enemy.agent.destination = destination;
+        enemy.agent.SearchPath();
     }
     public override void Update()
     {
@@ -26,13 +27,14 @@ public class MoveState_Melee : EnemyState
         if (enemy.PlayerInAttackRange())
         {
             stateMachine.ChangeState(enemy.attackState); // Change to attack state if player is in range
-            enemy.agent.ResetPath(); // Reset the agent's path when changing states
+            enemy.agent.SetPath(null); // Clear the path when attacking
             enemy.agent.isStopped = true; // Stop the agent when attacking
         }
 
         if (CanUpdateDestination())
         {
-            enemy.agent.SetDestination(destination);
+            enemy.agent.destination = destination;
+            enemy.agent.SearchPath();
             destination = enemy.GetPatrolDestination(); // Update the destination periodically
         }
 

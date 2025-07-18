@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.AI;
+using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     private Transform destination; // Destination transform for the enemy to move towards
 
     public Animator anim { get; private set; } // Reference to the enemy's animator
-    public NavMeshAgent agent { get; private set; }
+    public RichAI agent { get; private set; }
     public CharacterStats stats { get; private set; } // Reference to the enemy's stats
     public EnemyStateMachine stateMachine { get; private set; }
 
@@ -33,14 +33,19 @@ public class Enemy : MonoBehaviour
     protected virtual void Awake()
     {
         stateMachine = new EnemyStateMachine();
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<RichAI>();
         anim = GetComponentInChildren<Animator>();
         stats = GetComponent<CharacterStats>();
         GameManager.Instance?.RegisterEnemy(this);
         destination = GameManager.Instance?.player?.transform; // Set the destination to the player's position
 
-        agent.speed = moveSpeed; // Set the NavMeshAgent speed to the enemy's move speed
-        agent.avoidancePriority = Random.Range(50, 120); // Set a random avoidance priority for the NavMeshAgent
+        if (agent != null)
+        {
+            agent.maxSpeed = moveSpeed; // Set the RichAI speed to the enemy's move speed
+            var rvo = GetComponent<RVOController>();
+            if (rvo != null)
+                rvo.priority = Random.Range(0f, 1f); // Random avoidance priority
+        }
     }
 
     protected virtual void Start()
