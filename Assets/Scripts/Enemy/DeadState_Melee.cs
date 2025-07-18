@@ -14,7 +14,6 @@ public class DeadState_Melee : EnemyState
         base.Enter();
 
         enemy.agent.isStopped = true; // Stop the agent when entering the dead state
-        enemy.agent.velocity = Vector3.zero; // Ensure the agent's velocity is zero
 
     }
     public override void Update()

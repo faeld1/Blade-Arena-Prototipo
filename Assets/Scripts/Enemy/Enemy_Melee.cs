@@ -43,7 +43,7 @@ public class Enemy_Melee : Enemy
     {
         if (stats != null && stats.isDead) return;
         agent.isStopped = true;
-        agent.ResetPath();
+        agent.SetPath(null); // Stop the agent from moving
         stateMachine.ChangeState(idleState);
     }
 }
