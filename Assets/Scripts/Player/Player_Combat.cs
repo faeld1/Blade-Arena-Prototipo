@@ -30,7 +30,11 @@ public class Player_Combat : MonoBehaviour
 
     private void Update()
     {
-        if (stats.isDead || GameManager.Instance == null) return;
+        if (stats.isDead || GameManager.Instance == null)
+            return;
+
+        if (!GameManager.Instance.battleOngoing)
+            return;
 
         attackTimer += Time.deltaTime;
 
