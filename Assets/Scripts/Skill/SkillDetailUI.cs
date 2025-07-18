@@ -19,6 +19,8 @@ public class SkillDetailUI : MonoBehaviour
     [SerializeField] private Button sellButton;
     [SerializeField] private TextMeshProUGUI sellPriceText;
 
+    private Image backgroundImage;
+
     private SkillInstance currentSkill;
 
     private void Awake()
@@ -28,6 +30,8 @@ public class SkillDetailUI : MonoBehaviour
 
         if (sellButton != null)
             sellButton.onClick.AddListener(SellCurrentSkill);
+
+        backgroundImage = skillPanel.GetComponent<Image>();
     }
 
     private void Start()
@@ -70,7 +74,7 @@ public class SkillDetailUI : MonoBehaviour
                 EventSystem.current.RaycastAll(data, results);
                 foreach (var r in results)
                 {
-                    if (r.gameObject.GetComponent<SkillHudSlotUI>() != null)
+                    if (r.gameObject.GetComponentInParent<SkillHudSlotUI>() != null)
                         return;
                 }
                 Debug.Log("Clicked outside skill panel, hiding detail UI.");
@@ -100,12 +104,24 @@ public class SkillDetailUI : MonoBehaviour
         if (sellPriceText != null)
             sellPriceText.text = (skill.data.cost * skill.level).ToString();
 
+        if (backgroundImage != null)
+            backgroundImage.color = SkillUIColor.GetColor(skill.data.rarity);
+
         if (stars != null)
         {
             for (int i = 0; i < stars.Length; i++)
             {
                 if (stars[i] != null)
                     stars[i].SetActive(i < skill.level);
+
+                if (skill.level == stars.Length)
+                {
+                    stars[i].GetComponent<Image>().color = new Color(1f, 0.85f, 0.05f); // Highlight last star if max level
+                }
+                else
+                {
+                    stars[i].GetComponent<Image>().color = Color.white; // Default color for other stars
+                }
             }
         }
     }
