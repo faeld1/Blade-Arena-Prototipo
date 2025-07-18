@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using Pathfinding;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
@@ -219,8 +219,11 @@ public class LevelManager : MonoBehaviour
         if (GameManager.Instance.player == null) return;
         var playerObj = GameManager.Instance.player;
         playerObj.SetActive(true);
-        NavMeshAgent agent = playerObj.GetComponent<NavMeshAgent>();
-        agent.Warp(playerSpawnPoint.position);
+        IAstarAI agent = playerObj.GetComponent<IAstarAI>();
+        if (agent != null)
+        {
+            agent.Teleport(playerSpawnPoint.position);
+        }
         CharacterStats stats = playerObj.GetComponent<CharacterStats>();
         stats.currentHealth = stats.GetMaxHealth();
         stats.isDead = false;
@@ -233,10 +236,14 @@ public class LevelManager : MonoBehaviour
         if (GameManager.Instance.player == null) return;
         var playerObj = GameManager.Instance.player;
         playerObj.SetActive(true);
-        NavMeshAgent agent = playerObj.GetComponent<NavMeshAgent>();
-        agent.Warp(playerSpawnPoint.position);
-        agent.isStopped = false;
-        agent.SetDestination(endPoint.position);
+        IAstarAI agent = playerObj.GetComponent<IAstarAI>();
+        if (agent != null)
+        {
+            agent.Teleport(playerSpawnPoint.position);
+            agent.isStopped = false;
+            agent.destination = endPoint.position;
+            agent.SearchPath();
+        }
         CharacterStats stats = playerObj.GetComponent<CharacterStats>();
         stats.currentHealth = stats.GetMaxHealth();
         stats.isDead = false;
@@ -297,9 +304,13 @@ public class LevelManager : MonoBehaviour
     private void MovePlayerToEndPoint()
     {
         if (GameManager.Instance.player == null) return;
-        NavMeshAgent agent = GameManager.Instance.player.GetComponent<NavMeshAgent>();
-        agent.isStopped = false;
-        agent.SetDestination(endPoint.position);
+        IAstarAI agent = GameManager.Instance.player.GetComponent<IAstarAI>();
+        if (agent != null)
+        {
+            agent.isStopped = false;
+            agent.destination = endPoint.position;
+            agent.SearchPath();
+        }
     }
 
     private void FaceFirstEnemy()

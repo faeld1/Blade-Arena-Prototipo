@@ -1,9 +1,9 @@
 using UnityEngine;
-using UnityEngine.AI;
+using Pathfinding;
 
 public class Player_Movement : MonoBehaviour
 {
-    private NavMeshAgent agent;
+    private AIPath agent;
     private Transform currentTarget;
     private Player player;
     private Transform lookTarget;
@@ -12,7 +12,7 @@ public class Player_Movement : MonoBehaviour
     private void Start()
     {
         player = GetComponent<Player>();
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<AIPath>();
 
         SetTarget(player.CurrentEnemyTarget?.transform); // Set the target to the current enemy target
     }
@@ -21,7 +21,7 @@ public class Player_Movement : MonoBehaviour
     {
         if (currentTarget != null && !agent.isStopped && GameManager.Instance.battleOngoing == true)
         {
-            agent.SetDestination(currentTarget.position);
+            agent.destination = currentTarget.position;
         }
 
         if (facingTarget && lookTarget != null)

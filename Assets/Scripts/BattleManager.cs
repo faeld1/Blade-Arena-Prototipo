@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using Pathfinding;
 
 public class BattleManager : MonoBehaviour
 {
@@ -59,11 +59,12 @@ public class BattleManager : MonoBehaviour
 
         if (playerDestination != null && GameManager.Instance.player != null)
         {
-            var playerAgent = GameManager.Instance.player.GetComponent<NavMeshAgent>();
+            var playerAgent = GameManager.Instance.player.GetComponent<IAstarAI>();
             if (playerAgent != null)
             {
                 playerAgent.isStopped = false;
-                playerAgent.SetDestination(playerDestination.position);
+                playerAgent.destination = playerDestination.position;
+                playerAgent.SearchPath();
             }
         }
 
@@ -75,7 +76,8 @@ public class BattleManager : MonoBehaviour
             if (enemy != null && dest != null)
             {
                 enemy.agent.isStopped = false;
-                enemy.agent.SetDestination(dest.position);
+                enemy.agent.destination = dest.position;
+                enemy.agent.SearchPath();
             }
         }
     }
