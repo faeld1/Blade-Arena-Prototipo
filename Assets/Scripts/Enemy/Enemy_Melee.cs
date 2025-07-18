@@ -43,7 +43,7 @@ public class Enemy_Melee : Enemy
     {
         if (stats != null && stats.isDead) return;
         agent.isStopped = true;
-        agent.ResetPath();
+        agent.SetPath(null); // Clear any current path when the player dies
         stateMachine.ChangeState(idleState);
     }
 }

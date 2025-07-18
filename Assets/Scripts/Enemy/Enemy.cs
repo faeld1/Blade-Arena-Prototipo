@@ -1,5 +1,6 @@
 using UnityEngine;
 using Pathfinding;
+using Pathfinding.RVO;
 
 public class Enemy : MonoBehaviour
 {
