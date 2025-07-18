@@ -102,6 +102,7 @@ public class LevelManager : MonoBehaviour
             playerDiedLastRound = false;
 
             SpawnEnemies(currentLevel.rounds[currentRound]);
+            GameManager.Instance.player.GetComponent<Player_Combat>().SetCurrentTarget(null); // Reset current target
             float roundCountdown = currentRound == 0 ? firstCountdownDuration : countdownDuration;
             yield return StartCoroutine(CountdownRoutine(roundCountdown));
             GameManager.Instance?.StartBattle();

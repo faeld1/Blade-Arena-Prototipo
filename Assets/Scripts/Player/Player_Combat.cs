@@ -1,4 +1,5 @@
 using UnityEngine;
+using Pathfinding;
 
 public class Player_Combat : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Player_Combat : MonoBehaviour
     private CharacterStats stats;
     private Player_Movement movement;
     private Player player;
-
+    private AIPath agent;
     private bool isAttacking = false;
 
     private Enemy currentTarget;
@@ -23,6 +24,7 @@ public class Player_Combat : MonoBehaviour
     }
     private void Start()
     {
+        agent = GetComponent<AIPath>();
         stats = GetComponent<CharacterStats>();
         movement = GetComponent<Player_Movement>();
         player = GetComponent<Player>();
@@ -42,6 +44,22 @@ public class Player_Combat : MonoBehaviour
     }
 
     public void ResetCurrentTarget() => currentTarget = null;
+
+    public void SetCurrentTarget(Enemy target)
+    {
+        if (target == null || target.stats.isDead)
+        {
+            currentTarget = player.ClosestEnemy();
+        }
+        else
+        {
+            currentTarget = target;
+        }
+
+        movement.StopMovement();
+        agent.isStopped = true;
+        agent.SearchPath();
+    }
 
     private void TryAttack()
     {
