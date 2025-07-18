@@ -33,6 +33,11 @@ public class Player_Movement : MonoBehaviour
     public void SetTarget(Transform target)
     {
         currentTarget = target;
+        if (currentTarget != null)
+        {
+            agent.destination = currentTarget.position;
+            agent.SearchPath();
+        }
     }
 
     public void StopMovement()
@@ -43,6 +48,10 @@ public class Player_Movement : MonoBehaviour
     public void ResumeMovement()
     {
         agent.isStopped = false;
+        if (currentTarget != null)
+        {
+            agent.SearchPath();
+        }
     }
 
     public bool IsMoving()
