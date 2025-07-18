@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
 public class Player_Movement : MonoBehaviour
 {
     private NavMeshAgent agent;
@@ -14,7 +13,6 @@ public class Player_Movement : MonoBehaviour
     {
         player = GetComponent<Player>();
         agent = GetComponent<NavMeshAgent>();
-        //SetTarget(GameManager.Instance?.activeEnemies[0].transform); // Set the target to the player transform
 
         SetTarget(player.CurrentEnemyTarget?.transform); // Set the target to the current enemy target
     }
