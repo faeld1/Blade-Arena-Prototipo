@@ -7623,9 +7623,9 @@ GameObject:
   - component: {fileID: 1652831783}
   - component: {fileID: 1652831782}
   - component: {fileID: 1652831781}
-  - component: {fileID: 1652831786}
-  - component: {fileID: 1652831785}
   - component: {fileID: 1652831787}
+  - component: {fileID: 1652831789}
+  - component: {fileID: 1652831788}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -7771,7 +7771,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 4
---- !u!114 &1652831785
+--- !u!136 &1652831787
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652831778}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.26
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.71, z: 0}
+--- !u!114 &1652831788
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7780,12 +7803,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1652831778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Script: {fileID: 11500000, guid: ce11ea984e202491d9271f53021d8b89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1073741824
   radius: 0.5
-  height: 1.5
+  height: 1.73
   canMove: 1
   maxSpeed: 1
   gravity: {x: NaN, y: NaN, z: NaN}
@@ -7810,15 +7833,15 @@ MonoBehaviour:
     sensitivity: 10
     maximumPeriod: 2
     visualizeSensitivity: 0
-  maxAcceleration: -2.5
+  acceleration: 5
   rotationSpeed: 360
-  slowdownDistance: 0.6
-  pickNextWaypointDist: 2
-  alwaysDrawGizmos: 0
+  slowdownTime: 0.5
+  wallForce: 3
+  wallDist: 1
+  funnelSimplification: 0
   slowWhenNotFacingTarget: 1
   preventMovingBackwards: 0
-  constrainInsideGraph: 0
---- !u!114 &1652831786
+--- !u!114 &1652831789
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7846,29 +7869,6 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!136 &1652831787
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652831778}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.26
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.71, z: 0}
 --- !u!1 &1674534487
 GameObject:
   m_ObjectHideFlags: 0
