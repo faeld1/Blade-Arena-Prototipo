@@ -3,7 +3,7 @@ using Pathfinding;
 
 public class Player_Movement : MonoBehaviour
 {
-    private AIPath agent;
+    private RichAI agent;
     private Transform currentTarget;
     private Player player;
     private Transform lookTarget;
@@ -12,7 +12,7 @@ public class Player_Movement : MonoBehaviour
     private void Start()
     {
         player = GetComponent<Player>();
-        agent = GetComponent<AIPath>();
+        agent = GetComponent<RichAI>();
 
         SetTarget(player.CurrentEnemyTarget?.transform); // Set the target to the current enemy target
     }

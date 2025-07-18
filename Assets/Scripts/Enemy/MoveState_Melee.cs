@@ -33,9 +33,9 @@ public class MoveState_Melee : EnemyState
 
         if (CanUpdateDestination())
         {
+            destination = enemy.GetPatrolDestination(); // Update the destination before recalculating the path
             enemy.agent.destination = destination;
             enemy.agent.SearchPath();
-            destination = enemy.GetPatrolDestination(); // Update the destination periodically
         }
 
         enemy.transform.rotation = enemy.FaceTarget(GetNextPathPoint()); // Face the target while moving
