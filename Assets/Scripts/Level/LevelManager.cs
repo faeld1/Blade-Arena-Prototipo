@@ -90,8 +90,7 @@ public class LevelManager : MonoBehaviour
             {
                 SpawnPlayer();
                 MovePlayerToEndPoint();
-                yield return new WaitUntil(() =>
-                    Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
+                yield return WaitForPlayerArrival();
                 FaceFirstEnemy();
                 GameManager.Instance.player.GetComponent<Player_Movement>().StopMovement();
             }
@@ -125,8 +124,7 @@ public class LevelManager : MonoBehaviour
                 RemoveRemainingEnemies();
                 yield return new WaitForSeconds(2f);
                 RespawnPlayer();
-                yield return new WaitUntil(() =>
-                    Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
+                yield return WaitForPlayerArrival();
                 playerDiedLastRound = false;
                 if (currentRound == currentLevel.rounds.Count - 1)
                     currentRound--;
@@ -136,8 +134,7 @@ public class LevelManager : MonoBehaviour
             {
                 MovePlayerToEndPoint();
                 var intermission = StartCoroutine(IntermissionRoutine(true));
-                yield return new WaitUntil(() =>
-                    Vector3.Distance(GameManager.Instance.player.transform.position, endPoint.position) < 0.1f);
+                yield return WaitForPlayerArrival();
                 FaceFirstEnemy();
 
                 GameManager.Instance.player.GetComponent<Player_Movement>().StopMovement();
@@ -311,6 +308,18 @@ public class LevelManager : MonoBehaviour
             agent.destination = endPoint.position;
             agent.SearchPath();
         }
+    }
+
+    private IEnumerator WaitForPlayerArrival()
+    {
+        if (GameManager.Instance?.player == null)
+            yield break;
+
+        IAstarAI agent = GameManager.Instance.player.GetComponent<IAstarAI>();
+        if (agent == null)
+            yield break;
+
+        yield return new WaitUntil(() => agent.reachedDestination);
     }
 
     private void FaceFirstEnemy()
