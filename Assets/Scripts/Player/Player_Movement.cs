@@ -26,7 +26,7 @@ public class Player_Movement : MonoBehaviour
 
         if (facingTarget && lookTarget != null)
         {
-            transform.rotation = player.FaceTarget(lookTarget.position);
+            //transform.rotation = player.FaceTarget(lookTarget.position);
         }
     }
 

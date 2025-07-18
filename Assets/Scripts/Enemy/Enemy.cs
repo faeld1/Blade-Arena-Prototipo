@@ -105,6 +105,11 @@ public class Enemy : MonoBehaviour
 
         return Quaternion.Euler(currentEulerAngels.x, yRotation, currentEulerAngels.z);
     }
+    public void Destroy()
+    {
+        Destroy(gameObject); // Destroy the enemy game object
+    }
+
 
     private void OnDrawGizmos()
     {

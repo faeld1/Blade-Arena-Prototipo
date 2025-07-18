@@ -37,6 +37,11 @@ public class Enemy_Melee : Enemy
     public override void Dead()
     {
         stateMachine.ChangeState(deadState); // Change to dead state when the enemy dies
+        CapsuleCollider collider = GetComponent<CapsuleCollider>();
+        if (collider != null)
+        {
+            collider.enabled = false; // Disable the collider when dead
+        }
     }
 
     protected override void OnPlayerDeath()
@@ -46,4 +51,5 @@ public class Enemy_Melee : Enemy
         agent.SetPath(null); // Stop the agent from moving
         stateMachine.ChangeState(idleState);
     }
+
 }

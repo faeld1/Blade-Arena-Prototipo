@@ -16,4 +16,6 @@ public class EnemyAnimationEvents : MonoBehaviour
     public void AnimationTrigger() => enemy.AnimationTrigger();
 
     public void AttackHitOnPlayer() => enemy.Attack();
+
+    public void DestroyEnemy() => enemy.Destroy();
 }
