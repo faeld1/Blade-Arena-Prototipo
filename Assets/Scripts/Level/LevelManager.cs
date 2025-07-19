@@ -1,7 +1,7 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
@@ -91,8 +91,8 @@ public class LevelManager : MonoBehaviour
                 SpawnPlayer();
                 MovePlayerToEndPoint();
                 yield return WaitForPlayerArrival();
-                FaceFirstEnemy();
                 GameManager.Instance.player.GetComponent<Player_Movement>().StopMovement();
+                FaceFirstEnemy();
             }
             else
             {
@@ -103,6 +103,7 @@ public class LevelManager : MonoBehaviour
 
             SpawnEnemies(currentLevel.rounds[currentRound]);
             GameManager.Instance.player.GetComponent<Player_Combat>().SetCurrentTarget(null); // Reset current target
+            GameManager.Instance.player.GetComponent<RichAI>().updateRotation = true; // Enable automatic rotation
             float roundCountdown = currentRound == 0 ? firstCountdownDuration : countdownDuration;
             yield return StartCoroutine(CountdownRoutine(roundCountdown));
             GameManager.Instance?.StartBattle();
@@ -136,15 +137,14 @@ public class LevelManager : MonoBehaviour
                 MovePlayerToEndPoint();
                 var intermission = StartCoroutine(IntermissionRoutine(true));
                 yield return WaitForPlayerArrival();
-                FaceFirstEnemy();
 
                 GameManager.Instance.player.GetComponent<Player_Movement>().StopMovement();
+                FaceFirstEnemy();
                 GameManager.Instance.player.GetComponent<CharacterStats>().currentHealth =
-                    GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth(); // Reset health
+                GameManager.Instance.player.GetComponent<CharacterStats>().GetMaxHealth(); // Reset health
 
                 GameManager.Instance.player.GetComponent<Player_Stats>().UpdateHealth(); // Update health bar
 
-                //yield return StartCoroutine(IntermissionRoutine());
                 yield return intermission;
             }
         }
@@ -329,6 +329,9 @@ public class LevelManager : MonoBehaviour
         if (enemySpawnPoints.Count == 0) return;
         Transform lookTarget = enemySpawnPoints[0];
         var movement = GameManager.Instance.player.GetComponent<Player_Movement>();
+        IAstarAI agent = GameManager.Instance.player.GetComponent<IAstarAI>();
+
+        agent.updateRotation = false; // Disable automatic rotation
         movement.FaceTarget(lookTarget);
         Debug.Log("FaceFirstEnemy sendo chamado");
     }

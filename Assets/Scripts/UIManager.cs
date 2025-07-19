@@ -10,6 +10,11 @@ public class UIManager : MonoBehaviour
     [Header("Gold UI")]
     [SerializeField] private TextMeshProUGUI goldText;
 
+    [Header("Mini Details")]
+    [SerializeField] private TextMeshProUGUI miniCurrentGold;
+    [SerializeField] private TextMeshProUGUI miniCurrentSkillsCount;
+    [SerializeField] private TextMeshProUGUI miniCurrentLifesCount;
+
     [Header("XP Button Settings")]
     [SerializeField] private int xpAmount = 5;
     [SerializeField] private int goldCost = 5;
@@ -124,6 +129,9 @@ public class UIManager : MonoBehaviour
     {
         activeSkillCountText.text = $"{SkillManager.Instance.activeSkills.Count} / {SkillManager.Instance.maxActiveSlots}";
         desactiveSkillCountText.text = $"{SkillManager.Instance.reservedSkills.Count} / 4";
+
+        if (miniCurrentSkillsCount != null)
+            miniCurrentSkillsCount.text = SkillManager.Instance.maxActiveSlots.ToString();
     }
 
     public void UpdateCountdown(int value)
@@ -153,6 +161,9 @@ public class UIManager : MonoBehaviour
     {
         if (livesText != null)
             livesText.text = value.ToString();
+
+        if (miniCurrentLifesCount != null)
+            miniCurrentLifesCount.text = value.ToString();
     }
 
     private void SkipCountdownFunction()
@@ -182,6 +193,9 @@ public class UIManager : MonoBehaviour
     {
         if (goldText != null)
             goldText.text = value.ToString();
+
+        if (miniCurrentGold != null)
+            miniCurrentGold.text = value.ToString();
     }
 
 }
