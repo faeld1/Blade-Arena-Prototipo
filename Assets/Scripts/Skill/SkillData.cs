@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum SkillType { Passive }
+public enum SkillType { Passive, Active }
 public enum SkillRarity { Common, Uncommon, Rare, Epic, Legendary }
 
 [CreateAssetMenu(fileName = "NewSkill", menuName = "Skill")]
@@ -20,6 +20,8 @@ public class SkillData : ScriptableObject
     public int cost;
 
     public int maxLevel = 5;
+
+    public ActiveSkill activeSkill;
 
 #if UNITY_EDITOR
     private void OnValidate()
