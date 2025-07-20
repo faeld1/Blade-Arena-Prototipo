@@ -12,6 +12,7 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private GameObject cooldownGameObject;
     private TextMeshProUGUI cooldownText;
+    private ActiveSkill activeSkill;
 
     [SerializeField] private GameObject[] stars;
 
@@ -22,6 +23,22 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
     {
         instance = _instance;
         isActive = _isActive;
+
+        if (cooldownGameObject != null)
+            cooldownText = cooldownGameObject.GetComponentInChildren<TextMeshProUGUI>();
+
+        activeSkill = null;
+
+        bool showCooldown = instance.data.type == SkillType.Active;
+        if (cooldownGameObject != null)
+            cooldownGameObject.SetActive(showCooldown);
+
+        if (showCooldown && GameManager.Instance != null && GameManager.Instance.player != null)
+        {
+            var skills = GameManager.Instance.player.GetComponent<Player_Skills>();
+            if (skills != null)
+                activeSkill = skills.GetActiveSkill(instance.data);
+        }
 
         int skillValue = 0;
 
@@ -80,5 +97,23 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
     {
         SkillDetailUI.Instance?.Show(instance);
         Debug.Log("Clicked on skill: " + instance.data.skillName);
+    }
+
+    private void Update()
+    {
+        if (activeSkill == null || cooldownText == null || cooldownGameObject == null)
+            return;
+
+        float remaining = activeSkill.CooldownRemaining;
+        if (remaining > 0f)
+        {
+            if (!cooldownGameObject.activeSelf)
+                cooldownGameObject.SetActive(true);
+            cooldownText.text = Mathf.CeilToInt(remaining).ToString();
+        }
+        else if (cooldownGameObject.activeSelf)
+        {
+            cooldownGameObject.SetActive(false);
+        }
     }
 }

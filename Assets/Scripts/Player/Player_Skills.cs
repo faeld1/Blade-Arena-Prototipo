@@ -59,4 +59,10 @@ public class Player_Skills : MonoBehaviour
         pendingSkill?.TryUse();
         pendingSkill = null;
     }
+
+    public ActiveSkill GetActiveSkill(SkillData data)
+    {
+        skillLookup.TryGetValue(data, out var skill);
+        return skill;
+    }
 }
