@@ -28,13 +28,15 @@ public abstract class ActiveSkill : MonoBehaviour
     public void TryUse()
     {
         if (!IsOnCooldown)
+        {
+            gameObject.SetActive(true);
             StartCoroutine(UseCoroutine());
+        }
     }
 
     private IEnumerator UseCoroutine()
     {
         isActive = true;
-        gameObject.SetActive(true);
         OnActivate();
         nextReadyTime = Time.time + cooldown;
         yield return new WaitForSeconds(duration);

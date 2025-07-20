@@ -5625,6 +5625,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6766328773160137481, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
+      propertyPath: animationTrigger
+      value: SkillSlash01
+      objectReference: {fileID: 0}
     - target: {fileID: 6897905356919742418, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.084
@@ -8316,7 +8320,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec666fbf74a0bb4dae03f13e23b31d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slashSkillData: {fileID: 11400000, guid: adb82aa32cdcaba4ba7ff2cb17bf7d73, type: 2}
   skillReferences:
   - {fileID: 1379194800}
 --- !u!1 &1666203705
