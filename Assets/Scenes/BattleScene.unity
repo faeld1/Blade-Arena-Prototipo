@@ -5630,6 +5630,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6766328773160137481, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
+      propertyPath: activationRange
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6766328773160137481, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
       propertyPath: animationTrigger
       value: SkillSlash01
       objectReference: {fileID: 0}
@@ -8121,7 +8125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resources:
     maxHealth:
-      baseValue: 100
+      baseValue: 200
       modifiers: []
     healthRegen:
       baseValue: 0
