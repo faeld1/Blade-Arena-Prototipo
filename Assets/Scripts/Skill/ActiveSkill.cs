@@ -30,6 +30,12 @@ public abstract class ActiveSkill : MonoBehaviour
         if (!IsOnCooldown)
         {
             StartCoroutine(UseCoroutine());
+            // Start the coroutine from the owner so it works even when this
+            // GameObject is disabled.
+            if (owner != null)
+                owner.StartCoroutine(UseCoroutine());
+            else
+                StartCoroutine(UseCoroutine());
         }
     }
 
