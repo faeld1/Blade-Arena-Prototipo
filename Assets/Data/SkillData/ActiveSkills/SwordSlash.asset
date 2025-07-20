@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbcdb247ba80dee428e4da5df4ba63fb, type: 3}
+  m_Name: SwordSlash
+  m_EditorClassIdentifier: 
+  skillName: SwordSlash
+  description: 200% player Damage
+  icon: {fileID: -2023708246, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  type: 1
+  rarity: 0
+  attackBonus: 0
+  defenseBonus: 0
+  speedBonus: 0
+  healthBonus: 0
+  cost: 1
+  maxLevel: 5
+  activeSkill: {fileID: 0}
