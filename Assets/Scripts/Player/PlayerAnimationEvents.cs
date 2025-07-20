@@ -20,4 +20,13 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         combat.IsAttackingEnd();
     }
+
+    public void SkillEffect()
+    {
+    }
+
+    public void SkillAnimationEffectEnd()
+    {
+
+    }
 }
