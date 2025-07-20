@@ -25,11 +25,11 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void SkillEffect()
     {
-        skills?.ActivateSlashSkill();
+        skills?.ActivatePendingSkill();
     }
 
     public void SkillAnimationEffectEnd()
     {
-        // reserved for future use
+        combat.IsAttackingEnd();
     }
 }

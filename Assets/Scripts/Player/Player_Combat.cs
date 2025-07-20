@@ -10,6 +10,7 @@ public class Player_Combat : MonoBehaviour
     private CharacterStats stats;
     private Player_Movement movement;
     private Player player;
+    private Player_Skills skills;
     private RichAI agent;
     private bool isAttacking = false;
 
@@ -28,6 +29,7 @@ public class Player_Combat : MonoBehaviour
         stats = GetComponent<CharacterStats>();
         movement = GetComponent<Player_Movement>();
         player = GetComponent<Player>();
+        skills = GetComponent<Player_Skills>();
     }
 
     private void Update()
@@ -81,9 +83,13 @@ public class Player_Combat : MonoBehaviour
             if (attackTimer >= stats.attackCooldown && isAttacking == false)
             {
                 attackTimer = 0;
-                StartAttackAnimation();
+                bool usedSkill = skills != null && skills.TryUseNextActiveSkill(currentTarget, attackRange);
+                if (!usedSkill)
+                {
+                    StartAttackAnimation();
+                }
                 isAttacking = true;
-                player.animator.SetBool("IsAttacking", true);   
+                player.animator.SetBool("IsAttacking", true);
             }
         }
         else

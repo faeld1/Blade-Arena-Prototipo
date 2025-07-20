@@ -6,6 +6,8 @@ public abstract class ActiveSkill : MonoBehaviour
     [SerializeField] protected float cooldown = 1f;
     [SerializeField] protected float duration = 0.5f;
     [SerializeField] protected float damageMultiplier = 1f;
+    [SerializeField] protected float activationRange = 1.5f;
+    [SerializeField] protected string animationTrigger = "";
     [SerializeField] private SkillData data;
 
     protected Player owner;
@@ -19,6 +21,8 @@ public abstract class ActiveSkill : MonoBehaviour
     }
 
     public SkillData Data => data;
+    public float Range => activationRange;
+    public string AnimationTrigger => animationTrigger;
     public bool IsOnCooldown => Time.time < nextReadyTime;
 
     public void TryUse()

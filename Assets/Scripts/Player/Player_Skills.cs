@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 public class Player_Skills : MonoBehaviour
 {
-    [SerializeField] private SkillData slashSkillData;
     [SerializeField] private ActiveSkill[] skillReferences;
     private readonly Dictionary<SkillData, ActiveSkill> skillLookup = new();
 
     private Player player;
+    private ActiveSkill pendingSkill;
 
     private void Awake()
     {
@@ -19,26 +19,39 @@ public class Player_Skills : MonoBehaviour
         }
     }
 
-    private void Update()
+    public bool TryUseNextActiveSkill(Enemy target, float defaultRange)
     {
-        if (Input.GetKeyDown(KeyCode.J))
+        if (SkillManager.Instance == null || target == null) return false;
+
+        foreach (var instance in SkillManager.Instance.activeSkills)
         {
-            TryUseSlashSkill();
+            if (!skillLookup.TryGetValue(instance.data, out var skill))
+                continue;
+
+            if (skill.IsOnCooldown)
+                continue;
+
+            float range = skill.Range > 0 ? skill.Range : defaultRange;
+
+            if (Vector3.Distance(transform.position, target.transform.position) > range)
+                continue;
+
+            pendingSkill = skill;
+
+            if (!string.IsNullOrEmpty(skill.AnimationTrigger))
+                player.animator.SetTrigger(skill.AnimationTrigger);
+            else
+                pendingSkill.TryUse();
+
+            return true;
         }
+
+        return false;
     }
 
-    private void TryUseSlashSkill()
+    public void ActivatePendingSkill()
     {
-        if (!skillLookup.TryGetValue(slashSkillData, out var skill) || skill.IsOnCooldown)
-            return;
-
-        if (player != null)
-            player.animator.SetTrigger("SkillSlash01");
-    }
-
-    public void ActivateSlashSkill()
-    {
-        if (skillLookup.TryGetValue(slashSkillData, out var skill))
-            skill.TryUse();
+        pendingSkill?.TryUse();
+        pendingSkill = null;
     }
 }
