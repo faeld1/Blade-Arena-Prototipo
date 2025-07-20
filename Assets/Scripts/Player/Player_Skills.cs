@@ -15,6 +15,11 @@ public class Player_Skills : MonoBehaviour
         foreach (var skill in skillReferences)
         {
             if (skill != null && skill.Data != null && !skillLookup.ContainsKey(skill.Data))
+                if (skill == null) continue;
+
+            skill.SetOwner(player);
+
+            if (skill.Data != null && !skillLookup.ContainsKey(skill.Data))
                 skillLookup.Add(skill.Data, skill);
         }
     }

@@ -10,13 +10,15 @@ public abstract class ActiveSkill : MonoBehaviour
     [SerializeField] protected string animationTrigger = "";
     [SerializeField] private SkillData data;
 
-    protected Player owner;
+    [SerializeField] protected Player owner;
     protected bool isActive;
     private float nextReadyTime;
 
     protected virtual void Awake()
     {
         owner = GetComponentInParent<Player>();
+        if (owner == null)
+            owner = GetComponentInParent<Player>();
         gameObject.SetActive(false);
     }
 
@@ -25,15 +27,24 @@ public abstract class ActiveSkill : MonoBehaviour
     public string AnimationTrigger => animationTrigger;
     public bool IsOnCooldown => Time.time < nextReadyTime;
 
+    public void SetOwner(Player player) => owner = player;
+
     public void TryUse()
     {
         if (!IsOnCooldown)
         {
-            StartCoroutine(UseCoroutine());
             // Start the coroutine from the owner so it works even when this
             // GameObject is disabled.
             if (owner != null)
                 owner.StartCoroutine(UseCoroutine());
+            // Start the coroutine from an active object so it works even when
+            // this GameObject is disabled.
+            MonoBehaviour runner = owner != null
+                ? owner as MonoBehaviour
+                : SkillManager.Instance as MonoBehaviour;
+
+            if (runner != null)
+                runner.StartCoroutine(UseCoroutine());
             else
                 StartCoroutine(UseCoroutine());
         }
