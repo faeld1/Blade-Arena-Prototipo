@@ -33,23 +33,19 @@ public abstract class ActiveSkill : MonoBehaviour
 
     public void TryUse()
     {
-        if (!IsOnCooldown)
-        {
-            // Start the coroutine from the owner so it works even when this
-            // GameObject is disabled.
-            if (owner != null)
-                owner.StartCoroutine(UseCoroutine());
-            // Start the coroutine from an active object so it works even when
-            // this GameObject is disabled.
-            MonoBehaviour runner = owner != null
-                ? owner as MonoBehaviour
-                : SkillManager.Instance as MonoBehaviour;
+        if (IsOnCooldown)
+            return;
 
-            if (runner != null)
-                runner.StartCoroutine(UseCoroutine());
-            else
-                StartCoroutine(UseCoroutine());
-        }
+        // Select a MonoBehaviour to run the coroutine. Prefer the owner, but
+        // fall back to the SkillManager or this component if necessary.
+        MonoBehaviour runner = owner != null
+            ? owner as MonoBehaviour
+            : SkillManager.Instance as MonoBehaviour;
+
+        if (runner == null)
+            runner = this;
+
+        runner.StartCoroutine(UseCoroutine());
     }
 
     private IEnumerator UseCoroutine()
