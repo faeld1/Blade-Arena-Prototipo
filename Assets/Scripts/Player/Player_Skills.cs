@@ -1,39 +1,42 @@
-using System.Collections;
 using UnityEngine;
 
 public class Player_Skills : MonoBehaviour
 {
-    [SerializeField] private GameObject slashSkill;
+    [SerializeField] private SkillData slashSkillData;
+    private SwordSlashSkill slashSkill;
 
-    private void Update()
+    private Player player;
+
+    private void Awake()
     {
-        if(Input.GetKeyDown(KeyCode.J))
+        player = GetComponent<Player>();
+        if (slashSkillData != null && slashSkillData.activeSkillPrefab != null)
         {
-            ActivateSlashSkill();
+            var obj = Instantiate(slashSkillData.activeSkillPrefab, transform);
+            slashSkill = obj.GetComponent<SwordSlashSkill>();
+            slashSkill?.Configure(slashSkillData);
         }
     }
 
-    private void ActiveOrDesactiveSkill(GameObject skill, bool activeOrDesactive)
+    private void Update()
     {
-        if(skill == null)
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            Debug.LogWarning("Skill is null, cannot activate.");
-            return;
+            TryUseSlashSkill();
         }
+    }
 
-        skill.SetActive(activeOrDesactive);
+    private void TryUseSlashSkill()
+    {
+        if (slashSkill == null || slashSkill.IsOnCooldown)
+            return;
+
+        if (player != null)
+            player.animator.SetTrigger("SkillSlash01");
     }
 
     public void ActivateSlashSkill()
     {
-        StartCoroutine(ActiveSlashSkillCo());
+        slashSkill?.TryUse();
     }
-
-    private IEnumerator ActiveSlashSkillCo()
-    {
-        ActiveOrDesactiveSkill(slashSkill, true);
-        yield return new WaitForSeconds(1f); // Adjust the duration as needed
-        ActiveOrDesactiveSkill(slashSkill, false);
-    }
-
 }
