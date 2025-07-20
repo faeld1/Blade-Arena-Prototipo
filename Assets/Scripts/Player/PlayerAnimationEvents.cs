@@ -25,6 +25,9 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void SkillEffect()
     {
+        if (skills == null)
+            skills = GetComponentInParent<Player_Skills>();
+
         skills?.ActivatePendingSkill();
     }
 
