@@ -80,14 +80,23 @@ public class Player_Combat : MonoBehaviour
         {
             movement.StopMovement();
 
-            if (attackTimer >= stats.attackCooldown && isAttacking == false)
+            if (!isAttacking)
             {
-                attackTimer = 0;
+                // Use any available skill immediately when in range.
                 bool usedSkill = skills != null && skills.TryUseNextActiveSkill(currentTarget, attackRange);
-                if (!usedSkill)
+                if (usedSkill)
                 {
-                    StartAttackAnimation();
+                    attackTimer = 0f;
+                    isAttacking = true;
+                    player.animator.SetBool("IsAttacking", true);
+                    return;
                 }
+            }
+
+            if (attackTimer >= stats.attackCooldown && !isAttacking)
+            {
+                attackTimer = 0f;
+                StartAttackAnimation();
                 isAttacking = true;
                 player.animator.SetBool("IsAttacking", true);
             }
