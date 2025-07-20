@@ -6,7 +6,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     private Player_Combat combat;
     private Player_Skills skills;
 
-    private void Start()
+    private void Awake()
     {
         player = GetComponentInParent<Player>();
         combat = GetComponentInParent<Player_Combat>();
