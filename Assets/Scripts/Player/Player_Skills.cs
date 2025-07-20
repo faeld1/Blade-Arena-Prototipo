@@ -1,39 +1,35 @@
-using System.Collections;
 using UnityEngine;
 
 public class Player_Skills : MonoBehaviour
 {
-    [SerializeField] private GameObject slashSkill;
+    [SerializeField] private SwordSlashSkill slashSkill;
+
+    private Player player;
+
+    private void Awake()
+    {
+        player = GetComponent<Player>();
+    }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            ActivateSlashSkill();
+            TryUseSlashSkill();
         }
     }
 
-    private void ActiveOrDesactiveSkill(GameObject skill, bool activeOrDesactive)
+    private void TryUseSlashSkill()
     {
-        if(skill == null)
-        {
-            Debug.LogWarning("Skill is null, cannot activate.");
+        if (slashSkill == null || slashSkill.IsOnCooldown)
             return;
-        }
 
-        skill.SetActive(activeOrDesactive);
+        if (player != null)
+            player.animator.SetTrigger("SkillSlash01");
     }
 
     public void ActivateSlashSkill()
     {
-        StartCoroutine(ActiveSlashSkillCo());
+        slashSkill?.TryUse();
     }
-
-    private IEnumerator ActiveSlashSkillCo()
-    {
-        ActiveOrDesactiveSkill(slashSkill, true);
-        yield return new WaitForSeconds(1f); // Adjust the duration as needed
-        ActiveOrDesactiveSkill(slashSkill, false);
-    }
-
 }
