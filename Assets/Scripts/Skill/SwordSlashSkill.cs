@@ -35,4 +35,10 @@ public class SwordSlashSkill : ActiveSkill
             enemiesHit.Add(enemy);
         }
     }
+
+    private void Reset()
+    {
+        activationRange = 1.5f;
+        animationTrigger = "SkillSlash01";
+    }
 }
