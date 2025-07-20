@@ -1,14 +1,22 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Player_Skills : MonoBehaviour
 {
-    [SerializeField] private SwordSlashSkill slashSkill;
+    [SerializeField] private SkillData slashSkillData;
+    [SerializeField] private ActiveSkill[] skillReferences;
+    private readonly Dictionary<SkillData, ActiveSkill> skillLookup = new();
 
     private Player player;
 
     private void Awake()
     {
         player = GetComponent<Player>();
+        foreach (var skill in skillReferences)
+        {
+            if (skill != null && skill.Data != null && !skillLookup.ContainsKey(skill.Data))
+                skillLookup.Add(skill.Data, skill);
+        }
     }
 
     private void Update()
@@ -21,7 +29,7 @@ public class Player_Skills : MonoBehaviour
 
     private void TryUseSlashSkill()
     {
-        if (slashSkill == null || slashSkill.IsOnCooldown)
+        if (!skillLookup.TryGetValue(slashSkillData, out var skill) || skill.IsOnCooldown)
             return;
 
         if (player != null)
@@ -30,6 +38,7 @@ public class Player_Skills : MonoBehaviour
 
     public void ActivateSlashSkill()
     {
-        slashSkill?.TryUse();
+        if (skillLookup.TryGetValue(slashSkillData, out var skill))
+            skill.TryUse();
     }
 }

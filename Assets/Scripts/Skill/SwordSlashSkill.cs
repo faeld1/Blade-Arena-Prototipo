@@ -1,8 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SwordSlashSkill : ActiveSkill
 {
     [SerializeField] private BoxCollider hitBox;
+    private readonly HashSet<Enemy> enemiesHit = new();
 
     protected override void Awake()
     {
@@ -15,17 +17,22 @@ public class SwordSlashSkill : ActiveSkill
 
     protected override void OnActivate()
     {
+        enemiesHit.Clear();
         // VFX is played when the GameObject becomes active
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!isActive) return;
-        var enemy = other.GetComponent<Enemy>();
-        if (enemy != null && !enemy.stats.isDead)
+
+        if (!other.CompareTag("Enemy")) return;
+
+        var enemy = other.GetComponentInParent<Enemy>();
+        if (enemy != null && !enemy.stats.isDead && !enemiesHit.Contains(enemy))
         {
             float dmg = CalculateDamage();
             enemy.stats.TakeDamage(dmg);
+            enemiesHit.Add(enemy);
         }
     }
 }
