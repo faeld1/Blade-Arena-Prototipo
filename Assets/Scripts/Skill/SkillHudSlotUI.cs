@@ -110,10 +110,15 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
             if (!cooldownGameObject.activeSelf)
                 cooldownGameObject.SetActive(true);
             cooldownText.text = Mathf.CeilToInt(remaining).ToString();
+            if (iconImage != null)
+                iconImage.color = Color.gray;
         }
-        else if (cooldownGameObject.activeSelf)
+        else
         {
-            cooldownGameObject.SetActive(false);
+            if (cooldownGameObject.activeSelf)
+                cooldownGameObject.SetActive(false);
+            if (iconImage != null)
+                iconImage.color = Color.white;
         }
     }
 }
