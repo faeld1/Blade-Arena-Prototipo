@@ -76,22 +76,24 @@ public class Player_Combat : MonoBehaviour
         movement.SetTarget(currentTarget.transform);
         player.transform.rotation = player.FaceTarget(currentTarget.transform.position);
 
+        // Always attempt to use a skill first when possible.
+        if (!isAttacking)
+        {
+            bool usedSkill = skills != null &&
+                skills.TryUseNextActiveSkill(currentTarget, attackRange);
+            if (usedSkill)
+            {
+                movement.StopMovement();
+                attackTimer = 0f;
+                isAttacking = true;
+                player.animator.SetBool("IsAttacking", true);
+                return;
+            }
+        }
+
         if (distance <= attackRange)
         {
             movement.StopMovement();
-
-            if (!isAttacking)
-            {
-                // Use any available skill immediately when in range.
-                bool usedSkill = skills != null && skills.TryUseNextActiveSkill(currentTarget, attackRange);
-                if (usedSkill)
-                {
-                    attackTimer = 0f;
-                    isAttacking = true;
-                    player.animator.SetBool("IsAttacking", true);
-                    return;
-                }
-            }
 
             if (attackTimer >= stats.attackCooldown && !isAttacking)
             {
