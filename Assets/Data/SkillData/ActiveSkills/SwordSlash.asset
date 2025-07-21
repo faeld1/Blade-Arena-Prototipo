@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SwordSlash
   m_EditorClassIdentifier: 
   skillName: SwordSlash
-  description: 200% player Damage
+  description: of your attack damage to nearby enemies.
   icon: {fileID: -2023708246, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   type: 1
   rarity: 0
