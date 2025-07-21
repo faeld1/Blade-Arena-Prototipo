@@ -248,6 +248,7 @@ public class LevelManager : MonoBehaviour
         playerObj.GetComponent<Player>().SetIdle();
         playerObj.GetComponent<Player_Movement>().ResumeMovement();
         playerObj.GetComponent<Player_Combat>()?.ResetAttack();
+        playerObj.GetComponent<Player_FX>()?.PlayReviveFX();
         EnablePlayerHealthBar(playerObj);
     }
 
