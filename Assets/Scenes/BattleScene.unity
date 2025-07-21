@@ -5625,6 +5625,42 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4216258545655991479, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4216258545655991479, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[2].m_Name
+      value: Lifetime Slashs
+      objectReference: {fileID: 0}
+    - target: {fileID: 4216258545655991479, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Value
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4216258545655991479, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[1].m_Value
+      value: 57
+      objectReference: {fileID: 0}
+    - target: {fileID: 4216258545655991479, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[2].m_Value
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4216258545655991479, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[2].m_Overridden
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539630968519687279, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
+      propertyPath: m_Size.x
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539630968519687279, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
+      propertyPath: m_Size.z
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539630968519687279, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
+      propertyPath: m_Center.z
+      value: 0.52
+      objectReference: {fileID: 0}
     - target: {fileID: 6766328773160137481, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
       propertyPath: cooldown
       value: 3
@@ -5676,6 +5712,10 @@ PrefabInstance:
     - target: {fileID: 6897905356919742418, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575655513964542603, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
