@@ -19,7 +19,6 @@ public abstract class ActiveSkill : MonoBehaviour
         owner = GetComponentInParent<Player>();
         if (owner == null)
             owner = GetComponentInParent<Player>();
-        gameObject.SetActive(false);
     }
 
     public SkillData Data => data;
