@@ -81,6 +81,7 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
 
     public SkillInstance GetInstance() => instance;
     public bool IsActive() => isActive;
+    public bool IsOnCooldown() => activeSkill != null && activeSkill.IsOnCooldown;
 
     public void OnDrop(PointerEventData eventData)
     {
