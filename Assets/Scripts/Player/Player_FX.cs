@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Player_FX : MonoBehaviour
 {
+    [SerializeField] private GameObject reviveFX;
+
     [SerializeField] private Transform hitFxPosition;
     private CharacterStats stats;
 
