@@ -5631,7 +5631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6766328773160137481, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
       propertyPath: activationRange
-      value: 1.7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6766328773160137481, guid: 760f94f16b858e24e8314ca3b9ddd997, type: 3}
       propertyPath: animationTrigger

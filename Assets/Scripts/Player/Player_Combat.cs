@@ -87,7 +87,6 @@ public class Player_Combat : MonoBehaviour
                 skills.TryUseNextActiveSkill(currentTarget, attackRange);
             if (usedSkill)
             {
-                Debug.Log("Skill used instead of normal attack.");
                 movement.StopMovement();
                 attackTimer = 0f;
                 isAttacking = true;
