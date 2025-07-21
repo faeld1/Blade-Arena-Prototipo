@@ -36,6 +36,11 @@ public abstract class ActiveSkill : MonoBehaviour
         if (IsOnCooldown)
             return;
 
+        // Ensure the skill object is active before starting the coroutine.
+        // This avoids issues with coroutines on disabled objects on the first use.
+        if (!gameObject.activeSelf)
+            gameObject.SetActive(true);
+
         // Select a MonoBehaviour to run the coroutine. Prefer the owner, but
         // fall back to the SkillManager or this component if necessary.
         MonoBehaviour runner = owner != null
@@ -52,7 +57,6 @@ public abstract class ActiveSkill : MonoBehaviour
     private IEnumerator UseCoroutine()
     {
         Debug.Log("Coroutine chamada no ActiveSkill");
-        gameObject.SetActive(true);
         isActive = true;
         OnActivate();
         nextReadyTime = Time.time + cooldown;
