@@ -63,6 +63,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2818970231507609626}
   m_LocalEulerAnglesHint: {x: -9.653254, y: -0.00000019620217, z: 0.0000023235416}
+--- !u!1 &1068703326630836705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2178951675359656485}
+  m_Layer: 7
+  m_Name: HitFxPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2178951675359656485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068703326630836705}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.592, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5056852916023759687}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1404413067705064384
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,6 +698,7 @@ GameObject:
   - component: {fileID: 2408497068912740432}
   - component: {fileID: -6524368342366235104}
   - component: {fileID: -6956400756631312408}
+  - component: {fileID: 6437531888142723300}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -683,12 +715,13 @@ Transform:
   m_GameObject: {fileID: 8564704821382491036}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 3, y: 0, z: -0.44}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3859075086582619106}
   - {fileID: 6966664173351501740}
+  - {fileID: 2178951675359656485}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &7314265539867341350
@@ -936,6 +969,18 @@ MonoBehaviour:
   funnelSimplification: 0
   slowWhenNotFacingTarget: 1
   preventMovingBackwards: 0
+--- !u!114 &6437531888142723300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8564704821382491036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c6b383319d39fa45bdc981ccfbcdd89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8846175031930226005
 GameObject:
   m_ObjectHideFlags: 0
