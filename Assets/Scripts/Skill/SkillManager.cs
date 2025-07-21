@@ -97,23 +97,45 @@ public class SkillManager : MonoBehaviour
         bool firstIsActive = activeSkills.Contains(first);
         bool secondIsActive = activeSkills.Contains(second);
 
-        if (firstIsActive == secondIsActive) return;
-
-        if (firstIsActive)
+        // Same container: simply swap their positions
+        if (firstIsActive && secondIsActive)
         {
-            activeSkills.Remove(first);
-            reservedSkills.Remove(second);
-
-            activeSkills.Add(second);
-            reservedSkills.Add(first);
+            int index1 = activeSkills.IndexOf(first);
+            int index2 = activeSkills.IndexOf(second);
+            if (index1 >= 0 && index2 >= 0)
+            {
+                activeSkills[index1] = second;
+                activeSkills[index2] = first;
+            }
         }
-        else
+        else if (!firstIsActive && !secondIsActive)
         {
-            reservedSkills.Remove(first);
-            activeSkills.Remove(second);
+            int index1 = reservedSkills.IndexOf(first);
+            int index2 = reservedSkills.IndexOf(second);
+            if (index1 >= 0 && index2 >= 0)
+            {
+                reservedSkills[index1] = second;
+                reservedSkills[index2] = first;
+            }
+        }
+        else // different containers: swap between lists
+        {
+            if (firstIsActive)
+            {
+                activeSkills.Remove(first);
+                reservedSkills.Remove(second);
 
-            reservedSkills.Add(second);
-            activeSkills.Add(first);
+                activeSkills.Add(second);
+                reservedSkills.Add(first);
+            }
+            else
+            {
+                reservedSkills.Remove(first);
+                activeSkills.Remove(second);
+
+                reservedSkills.Add(second);
+                activeSkills.Add(first);
+            }
         }
 
         ReapplyBonuses();
