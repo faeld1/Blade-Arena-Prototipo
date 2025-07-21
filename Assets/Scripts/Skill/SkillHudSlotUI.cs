@@ -88,10 +88,7 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
         var dragged = DraggedSkillSlot.draggedSlotUI;
         if (dragged == null || dragged == this) return;
 
-        if (dragged.IsActive() != IsActive())
-        {
-            SkillManager.Instance.SwapSkills(dragged.GetInstance(), instance);
-        }
+        SkillManager.Instance.SwapSkills(dragged.GetInstance(), instance);
     }
 
     public void OnPointerDown(PointerEventData eventData)
