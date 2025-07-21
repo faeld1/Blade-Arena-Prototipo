@@ -4923,7 +4923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 8525990746615576120, guid: b85d21f3b8fed714bacf0c4fd50fa512, type: 3}
-  poolSize: 4
+  poolSize: 10
 --- !u!114 &1090655310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8475,6 +8475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7688ddcee3c3684dbcb569128cb7013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitFxPosition: {fileID: 2139701953}
 --- !u!1 &1666203705
 GameObject:
   m_ObjectHideFlags: 0

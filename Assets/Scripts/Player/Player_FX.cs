@@ -27,6 +27,6 @@ public class Player_FX : MonoBehaviour
         if (hitFxPosition == null || HitFxManager.instance == null)
             return;
 
-        HitFxManager.instance.PlayHitFx(hitFxPosition.position, hitFxPosition.rotation);
+        HitFxManager.instance.PlayHitFx(hitFxPosition.position);
     }
 }
