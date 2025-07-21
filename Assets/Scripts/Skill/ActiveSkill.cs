@@ -28,6 +28,7 @@ public abstract class ActiveSkill : MonoBehaviour
     public bool IsOnCooldown => Time.time < nextReadyTime;
     public float CooldownRemaining => Mathf.Max(0f, nextReadyTime - Time.time);
     public float CooldownDuration => cooldown;
+    public float[] DamageMultipliers => damageMultipliers;
 
     public void SetOwner(Player player) => owner = player;
 

@@ -55,7 +55,24 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
         if (bgImage) bgImage.color = SkillUIColor.GetColor(instance.data.rarity);
         if (nameText) nameText.text = instance.data.skillName;
         if (levelText) levelText.text = "Lv. " + instance.level;
-        if (descriptionText) descriptionText.text = $"Increases {instance.data.description} by {skillValue}";
+
+        if (descriptionText)
+        {
+            if (instance.data.type == SkillType.Active)
+            {
+                float percent = 100f;
+                if (activeSkill != null && activeSkill.DamageMultipliers != null && activeSkill.DamageMultipliers.Length > 0)
+                {
+                    int idx = Mathf.Clamp(instance.level - 1, 0, activeSkill.DamageMultipliers.Length - 1);
+                    percent = activeSkill.DamageMultipliers[idx] * 100f;
+                }
+                descriptionText.text = $"Deals {percent}% {instance.data.description}";
+            }
+            else
+            {
+                descriptionText.text = $"Increases {instance.data.description} by {skillValue}";
+            }
+        }
 
         if (stars != null)
         {
