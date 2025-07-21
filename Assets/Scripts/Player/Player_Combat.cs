@@ -81,7 +81,7 @@ public class Player_Combat : MonoBehaviour
         player.transform.rotation = player.FaceTarget(currentTarget.transform.position);
 
         // Always attempt to use a skill first when possible.
-        if (!isAttacking && distance <= attackRange + 0.1f)
+        if (!isAttacking)
         {
             bool usedSkill = skills != null &&
                 skills.TryUseNextActiveSkill(currentTarget, attackRange);
