@@ -13,10 +13,18 @@ public class SkillDropSlot : MonoBehaviour, IDropHandler
         var skill = dragged.GetInstance();
         var wasActive = dragged.IsActive();
 
-        // evita mover para mesmo grupo
-        if (wasActive == isActiveSlot) return;
+        // se soltar no mesmo container, move para o final da lista
+        if (wasActive == isActiveSlot)
+        {
+            var list = wasActive ? SkillManager.Instance.activeSkills : SkillManager.Instance.reservedSkills;
+            if (list.Remove(skill))
+                list.Add(skill);
 
-        // MoveSkill j atualiza HUD e stats
+            SkillManager.Instance.skillHUDController.UpdateHUD();
+            return;
+        }
+
+        // MoveSkill já atualiza HUD e stats
         SkillManager.Instance.MoveSkill(skill, isActiveSlot);
     }
 }
