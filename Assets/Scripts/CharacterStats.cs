@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacterStats : MonoBehaviour
 {
     public static Action OnHealthChanged;
+    public event Action OnHit;
 
     public Stat_ResourceGroup resources;
     public Stat_OffenseGroup offense;
@@ -41,6 +42,7 @@ public class CharacterStats : MonoBehaviour
         }
 
         currentHealth -= _damage;
+        OnHit?.Invoke();
         if (currentHealth <= 0)
         {
             currentHealth = 0;
