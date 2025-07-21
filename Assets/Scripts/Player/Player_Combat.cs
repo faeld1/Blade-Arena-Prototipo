@@ -16,14 +16,7 @@ public class Player_Combat : MonoBehaviour
 
     private Enemy currentTarget;
 
-    public void ResetAttack()
-    {
-        isAttacking = false;
-        attackTimer = 0f;
-        if (player != null)
-            player.animator.SetBool("IsAttacking", false);
-    }
-    private void Start()
+    private void Awake()
     {
         agent = GetComponent<RichAI>();
         stats = GetComponent<CharacterStats>();
@@ -44,6 +37,17 @@ public class Player_Combat : MonoBehaviour
 
         TryAttack();
     }
+
+    public void ResetAttack()
+    {
+        isAttacking = false;
+        attackTimer = 0f;
+        if (player != null)
+            player.animator.SetBool("IsAttacking", false);
+    }
+
+
+
 
     public void ResetCurrentTarget() => currentTarget = null;
 
@@ -77,12 +81,13 @@ public class Player_Combat : MonoBehaviour
         player.transform.rotation = player.FaceTarget(currentTarget.transform.position);
 
         // Always attempt to use a skill first when possible.
-        if (!isAttacking)
+        if (!isAttacking && distance <= attackRange + 0.1f)
         {
             bool usedSkill = skills != null &&
                 skills.TryUseNextActiveSkill(currentTarget, attackRange);
             if (usedSkill)
             {
+                Debug.Log("Skill used instead of normal attack.");
                 movement.StopMovement();
                 attackTimer = 0f;
                 isAttacking = true;

@@ -29,7 +29,7 @@ public class Player_Skills : MonoBehaviour
     public bool TryUseNextActiveSkill(Enemy target, float defaultRange)
     {
         if (SkillManager.Instance == null || target == null) return false;
-
+        Debug.Log("Trying to use next active skill on target: " + target.name);
         foreach (var instance in SkillManager.Instance.activeSkills)
         {
             if (!skillLookup.TryGetValue(instance.data, out var skill))
