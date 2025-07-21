@@ -333,7 +333,6 @@ public class LevelManager : MonoBehaviour
 
         agent.updateRotation = false; // Disable automatic rotation
         movement.FaceTarget(lookTarget);
-        Debug.Log("FaceFirstEnemy sendo chamado");
     }
 
     private IEnumerator ReturnToMenuRoutine()

@@ -45,15 +45,21 @@ public abstract class ActiveSkill : MonoBehaviour
         if (runner == null)
             runner = this;
 
+
         runner.StartCoroutine(UseCoroutine());
     }
 
     private IEnumerator UseCoroutine()
     {
+        Debug.Log("Coroutine chamada no ActiveSkill");
         gameObject.SetActive(true);
         isActive = true;
         OnActivate();
         nextReadyTime = Time.time + cooldown;
+
+        if(gameObject.activeSelf)
+            Debug.Log("ActiveSkill is active");
+
         yield return new WaitForSeconds(duration);
         gameObject.SetActive(false);
         isActive = false;
