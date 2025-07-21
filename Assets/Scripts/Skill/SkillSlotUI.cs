@@ -29,6 +29,15 @@ public class SkillSlotUI : MonoBehaviour
 
         int skillValue = 0;
 
+        ActiveSkill activeSkill = null;
+
+        if (skill.type == SkillType.Active && GameManager.Instance != null && GameManager.Instance.player != null)
+        {
+            var skills = GameManager.Instance.player.GetComponent<Player_Skills>();
+            if (skills != null)
+                activeSkill = skills.GetActiveSkill(skill);
+        }
+
         if (skill.attackBonus != 0)
             skillValue = skill.attackBonus;
         else if (skill.defenseBonus != 0)
@@ -52,7 +61,17 @@ public class SkillSlotUI : MonoBehaviour
 
         if (descriptionText != null)
         {
-            descriptionText.text = $"Increases {skill.description} by {skillValue}";
+            if (skill.type == SkillType.Active)
+            {
+                float percent = 100f;
+                if (activeSkill != null && activeSkill.DamageMultipliers != null && activeSkill.DamageMultipliers.Length > 0)
+                    percent = activeSkill.DamageMultipliers[0] * 100f;
+                descriptionText.text = $"Deals {percent}% {skill.description}";
+            }
+            else
+            {
+                descriptionText.text = $"Increases {skill.description} by {skillValue}";
+            }
         }
     }
 
