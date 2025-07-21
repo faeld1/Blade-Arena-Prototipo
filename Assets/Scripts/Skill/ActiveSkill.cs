@@ -5,7 +5,8 @@ public abstract class ActiveSkill : MonoBehaviour
 {
     [SerializeField] protected float cooldown = 1f;
     [SerializeField] protected float duration = 0.5f;
-    [SerializeField] protected float damageMultiplier = 1f;
+    [SerializeField]
+    protected float[] damageMultipliers = new float[5] { 1f, 1f, 1f, 1f, 1f };
     [SerializeField] protected float activationRange = 1.5f;
     [SerializeField] protected string animationTrigger = "";
     [SerializeField] private SkillData data;
@@ -74,8 +75,19 @@ public abstract class ActiveSkill : MonoBehaviour
 
     protected float CalculateDamage()
     {
-        if (owner == null) return 0f;
+        if (owner == null)
+            return 0f;
+
+        int level = 1;
+        if (data != null && SkillManager.Instance != null)
+        {
+            level = SkillManager.Instance.GetSkillLevel(data);
+        }
+
+        level = Mathf.Clamp(level, 1, damageMultipliers.Length);
+        float multiplier = damageMultipliers[level - 1];
+
         bool crit;
-        return owner.Stats.GetDamage(out crit, damageMultiplier);
+        return owner.Stats.GetDamage(out crit, multiplier);
     }
 }
