@@ -48,7 +48,7 @@ public class Player_FX : MonoBehaviour
         Vector3 startPos = reviveFX.transform.localPosition;
         Vector3 endPos = startPos + Vector3.down;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         float duration = 2f;
         float elapsed = 0f;
