@@ -33,6 +33,11 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
         bool showCooldown = instance.data.type == SkillType.Active;
         if (cooldownGameObject != null)
             cooldownGameObject.SetActive(showCooldown);
+        if (cooldownImageLayer != null)
+        {
+            cooldownImageLayer.fillAmount = 0f;
+            cooldownImageLayer.gameObject.SetActive(false);
+        }
 
         if (showCooldown && GameManager.Instance != null && GameManager.Instance.player != null)
         {
@@ -126,15 +131,25 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
             if (!cooldownGameObject.activeSelf)
                 cooldownGameObject.SetActive(true);
             cooldownText.text = Mathf.CeilToInt(remaining).ToString();
-            if (iconImage != null)
-                iconImage.color = Color.gray;
+
+            if (cooldownImageLayer != null)
+            {
+                if (!cooldownImageLayer.gameObject.activeSelf)
+                    cooldownImageLayer.gameObject.SetActive(true);
+                float duration = activeSkill.CooldownDuration;
+                cooldownImageLayer.fillAmount = Mathf.Clamp01(remaining / duration);
+            }
         }
         else
         {
             if (cooldownGameObject.activeSelf)
                 cooldownGameObject.SetActive(false);
-            if (iconImage != null)
-                iconImage.color = Color.white;
+
+            if (cooldownImageLayer != null && cooldownImageLayer.gameObject.activeSelf)
+            {
+                cooldownImageLayer.fillAmount = 0f;
+                cooldownImageLayer.gameObject.SetActive(false);
+            }
         }
     }
 }
