@@ -176,6 +176,8 @@ public class SkillManager : MonoBehaviour
         var playerStats = GameManager.Instance?.player?.GetComponent<Player_Stats>();
         if (playerStats == null) return;
 
+        float healthRatio = playerStats.currentHealth / playerStats.GetMaxHealth();
+
         foreach (var skill in activeSkills)
             playerStats.RemoveSkillModifier(skill);
 
@@ -184,6 +186,9 @@ public class SkillManager : MonoBehaviour
 
         foreach (var skill in activeSkills)
             playerStats.ApplySkillModifier(skill);
+
+        playerStats.currentHealth = Mathf.Clamp(playerStats.GetMaxHealth() * healthRatio, 0, playerStats.GetMaxHealth());
+        playerStats.UpdateHealth();
 
         PlayerStatsHUD.Instance?.UpdateStats();
     }
