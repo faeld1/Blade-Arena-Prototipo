@@ -26,17 +26,24 @@ public class Player : MonoBehaviour
         }
 
         UpdateAnimations();
+        UpdateRootMotion();
     }
 
     private void UpdateAnimations()
     {
         bool isMoving = movement.IsMoving();
 
-        // Só muda o bool se ele for diferente do valor atual
+        // SÃ³ muda o bool se ele for diferente do valor atual
         if (animator.GetBool("IsWalking") != isMoving)
         {
             animator.SetBool("IsWalking", isMoving);
         }
+    }
+
+    private void UpdateRootMotion()
+    {
+        bool isIdle = !animator.GetBool("IsWalking") && !animator.GetBool("IsAttacking");
+        animator.applyRootMotion = isIdle;
     }
 
     public void PlayAttack()
