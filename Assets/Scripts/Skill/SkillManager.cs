@@ -177,7 +177,9 @@ public class SkillManager : MonoBehaviour
         if (playerStats == null) return;
 
         //float previousHealth = playerStats.currentHealth;
-        float healthRatio = playerStats.currentHealth / playerStats.GetMaxHealth();
+        //float healthRatio = playerStats.currentHealth / playerStats.GetMaxHealth();
+        float previousHealth = playerStats.currentHealth;
+        float previousMax = playerStats.GetMaxHealth();
 
         foreach (var skill in activeSkills)
             playerStats.RemoveSkillModifier(skill);
@@ -189,7 +191,13 @@ public class SkillManager : MonoBehaviour
             playerStats.ApplySkillModifier(skill);
 
         //playerStats.currentHealth = Mathf.Clamp(previousHealth, 0, playerStats.GetMaxHealth());
-        playerStats.currentHealth = Mathf.Clamp(playerStats.GetMaxHealth() * healthRatio, 0, playerStats.GetMaxHealth());
+        //playerStats.currentHealth = Mathf.Clamp(playerStats.GetMaxHealth() * healthRatio, 0, playerStats.GetMaxHealth());
+        float newMax = playerStats.GetMaxHealth();
+        if (Mathf.Approximately(previousHealth, previousMax))
+            playerStats.currentHealth = newMax;
+        else
+            playerStats.currentHealth = Mathf.Min(previousHealth, newMax);
+
         playerStats.UpdateHealth();
 
         PlayerStatsHUD.Instance?.UpdateStats();
