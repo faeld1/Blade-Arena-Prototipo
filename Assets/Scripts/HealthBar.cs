@@ -37,7 +37,7 @@ public class HealthBar : MonoBehaviour
         slider.maxValue = myStats.GetMaxHealth();
         slider.value = myStats.currentHealth;
 
-        healthText.text = (myStats.currentHealth + "/" + myStats.GetMaxHealth());
+        healthText.text = $"{Mathf.RoundToInt(myStats.currentHealth)}/{Mathf.RoundToInt(myStats.GetMaxHealth())}";
 
 
         if (myStats.currentHealth <= 0)
