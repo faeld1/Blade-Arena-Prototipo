@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
         }
 
         UpdateAnimations();
-        UpdateRootMotion();
     }
 
     private void UpdateAnimations()
@@ -38,12 +37,6 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("IsWalking", isMoving);
         }
-    }
-
-    private void UpdateRootMotion()
-    {
-        bool isIdle = !animator.GetBool("IsWalking") && !animator.GetBool("IsAttacking");
-        animator.applyRootMotion = isIdle;
     }
 
     public void PlayAttack()

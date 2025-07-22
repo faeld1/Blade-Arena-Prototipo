@@ -11,6 +11,7 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private GameObject cooldownGameObject;
+    [SerializeField] private Image cooldownImageLayer;
     private TextMeshProUGUI cooldownText;
     private ActiveSkill activeSkill;
 
