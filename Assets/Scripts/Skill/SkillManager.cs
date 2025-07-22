@@ -162,8 +162,13 @@ public class SkillManager : MonoBehaviour
 
     public void SellSkill(SkillInstance skill)
     {
+        var playerStats = GameManager.Instance?.player?.GetComponent<Player_Stats>();
+
         if (activeSkills.Remove(skill) || reservedSkills.Remove(skill))
         {
+            // Remove the modifiers granted by this skill from the player stats
+            playerStats?.RemoveSkillModifier(skill);
+
             GameManager.Instance?.AddGold(skill.data.cost * skill.level);
             ReapplyBonuses();
             skillHUDController.UpdateHUD();
