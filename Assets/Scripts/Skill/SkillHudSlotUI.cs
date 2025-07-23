@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
+public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerClickHandler
 {
     [SerializeField] private Image iconImage;
     [SerializeField] private Image bgImage;
@@ -114,7 +114,7 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerDownHandler
         SkillManager.Instance.SwapSkills(dragged.GetInstance(), instance);
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
         SkillDetailUI.Instance?.Show(instance);
         Debug.Log("Clicked on skill: " + instance.data.skillName);
