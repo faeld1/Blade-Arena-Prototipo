@@ -13,7 +13,7 @@ public class AdminManager : MonoBehaviour
     [SerializeField] private RectTransform adminPainelHidePosition;
 
     private RectTransform rectTransform;
-    private readonly float[] timeScaleOptions = new float[] { 1f, 2f };
+    private readonly float[] timeScaleOptions = new float[] { 1f, 2f, 3f };
     private int currentSpeedIndex = 0;
 
     private void Awake()
