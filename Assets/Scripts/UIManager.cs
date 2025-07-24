@@ -7,6 +7,14 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+    [Header("Shop Details")]
+    public SkillShopUI skillShopUI; // referencie no Inspetor
+    [SerializeField] private Button openShopButton; // opcional, se quiser um botao para abrir a loja
+    [SerializeField] private RectTransform skillShopContainer;
+    [SerializeField] private RectTransform skillShopHidePosition;
+    [SerializeField] private RectTransform skillShopShowPosition;
+    private bool shopIsOpen = true;
+
     [Header("Gold UI")]
     [SerializeField] private TextMeshProUGUI goldText;
 
@@ -53,6 +61,7 @@ public class UIManager : MonoBehaviour
         if (goldText == null)
             goldText = GetComponent<TextMeshProUGUI>();
         UpdateGold(GameManager.Instance ? GameManager.Instance.GetCurrentGold() : 0);
+        openShopButton?.onClick.AddListener(OpenShop);
 
         ShowSkipCountdownButton(false);
         HideGoldEarns();
@@ -61,6 +70,16 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         UpdateActiveSkillCount();
+
+        OpenShop();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OpenCloseShop();
+        }
     }
     private void OnEnable()
     {
@@ -79,6 +98,64 @@ public class UIManager : MonoBehaviour
         GameManager.OnLevelUp -= LevelUp;
         GameManager.OnGoldChanged -= UpdateGold;
     }
+
+    //Metodo Genericos
+    public IEnumerator MoveUI(RectTransform target, RectTransform startRef, RectTransform endRef, float duration, float delayBefore = 0f, float delayAfter = 0f)
+    {
+        if (startRef == null || endRef == null || target == null)
+        {
+            Debug.LogWarning("Alguma referência de RectTransform está nula.");
+            yield break;
+        }
+
+        if (delayBefore > 0f)
+            yield return new WaitForSeconds(delayBefore);
+
+        Vector2 startPos = startRef.anchoredPosition;
+        Vector2 endPos = endRef.anchoredPosition;
+
+        float elapsedTime = 0f;
+        target.anchoredPosition = startPos;
+
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            target.anchoredPosition = Vector2.Lerp(startPos, endPos, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        target.anchoredPosition = endPos;
+
+        if (delayAfter > 0f)
+            yield return new WaitForSeconds(delayAfter);
+    }
+    //SHOP DETAILS
+    public void OpenCloseShop()
+    {
+        if (shopIsOpen)
+        {
+            CloseShop();
+        }
+        else
+        {
+            OpenShop();
+        }
+    }
+
+    public void CloseShop()
+    {
+        shopIsOpen=false;
+        StartCoroutine(MoveUI(skillShopContainer, skillShopShowPosition, skillShopHidePosition, 0.2f));
+        openShopButton.gameObject.SetActive(true); // opcional, se quiser esconder o botao ao abrir a loja
+    }
+    public void OpenShop()
+    {
+        shopIsOpen = true;
+        StartCoroutine(MoveUI(skillShopContainer, skillShopHidePosition, skillShopShowPosition, 0.2f));   
+        openShopButton.gameObject.SetActive(false); // opcional, se quiser esconder o botao ao fechar a loja
+    }
+    //SHOP DETAILS^
 
     private void LevelUp(int level)
     {

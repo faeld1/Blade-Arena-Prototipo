@@ -7,6 +7,7 @@ public class SkillShopUI : MonoBehaviour
     [SerializeField] private SkillSlotUI[] skillSlots;
     [SerializeField] private Button refreshButton;
     [SerializeField] private Toggle lockToggle;
+    [SerializeField] private Button closeShopBtn;
 
     [SerializeField] private List<SkillData> allPossibleSkills;
 
@@ -31,6 +32,7 @@ public class SkillShopUI : MonoBehaviour
     private void Start()
     {
         refreshButton.onClick.AddListener(RefreshShopButton);
+        closeShopBtn.onClick.AddListener(UIManager.Instance.CloseShop);
         RefreshShop(0);
     }
 

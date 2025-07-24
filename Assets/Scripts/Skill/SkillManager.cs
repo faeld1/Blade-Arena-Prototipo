@@ -6,10 +6,6 @@ public class SkillManager : MonoBehaviour
 {
     public static SkillManager Instance;
 
-    public SkillShopUI skillShopUI; // referencie no Inspetor
-
-    [SerializeField] private Button openShopButton; // opcional, se quiser um botao para abrir a loja
-
     public List<SkillInstance> activeSkills = new List<SkillInstance>(); 
     public List<SkillInstance> reservedSkills = new List<SkillInstance>();
 
@@ -22,22 +18,8 @@ public class SkillManager : MonoBehaviour
         else Destroy(gameObject);
 
         skillHUDController = GetComponent<SkillHUDController>();
-        
-        openShopButton?.onClick.AddListener(OpenCloseShop);
     }
 
-    private void Start()
-    {
-        CloseShop(); // opcional, para iniciar a loja fechada
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            OpenCloseShop();
-        }
-    }
     public void AddSkill(SkillData skill)
     {
         // procura em ambas as listas para evitar duplicacao
@@ -208,26 +190,5 @@ public class SkillManager : MonoBehaviour
         PlayerStatsHUD.Instance?.UpdateStats();
     }
 
-    public void OpenCloseShop()
-    {
-        if (skillShopUI.gameObject.activeSelf)
-        {
-            CloseShop();
-        }
-        else
-        {
-            OpenShop();
-        }
-    }
 
-    public void CloseShop()
-    {
-        skillShopUI.gameObject.SetActive(false);
-        openShopButton.gameObject.SetActive(true); // opcional, se quiser esconder o botao ao fechar a loja
-    }
-    public void OpenShop()
-    {
-        skillShopUI.gameObject.SetActive(true);
-        openShopButton.gameObject.SetActive(false); // opcional, se quiser esconder o botao ao abrir a loja
-    }
 }
