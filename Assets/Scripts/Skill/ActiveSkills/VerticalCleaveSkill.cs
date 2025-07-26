@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class VerticalCleave : ActiveSkill
+public class VerticalCleaveSkill : ActiveSkill
 {
     [SerializeField] private BoxCollider hitBox;
     [SerializeField] private float moveSpeed = 5f;
@@ -28,13 +28,13 @@ public class VerticalCleave : ActiveSkill
         if (owner != null)
             transform.rotation = owner.transform.rotation;
         if (rb != null)
-            rb.velocity = transform.forward * moveSpeed;
+            rb.linearVelocity = transform.forward * moveSpeed;
     }
 
     protected override void OnDeactivate()
     {
         if (rb != null)
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
         transform.localPosition = originalLocalPosition;
     }
 
