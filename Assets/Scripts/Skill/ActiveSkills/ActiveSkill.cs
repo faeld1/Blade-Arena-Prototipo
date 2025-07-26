@@ -14,6 +14,7 @@ public abstract class ActiveSkill : MonoBehaviour
     [SerializeField] protected Player owner;
     protected bool isActive;
     private float nextReadyTime;
+    private Transform originalParent;
 
     protected virtual void Awake()
     {
@@ -59,16 +60,21 @@ public abstract class ActiveSkill : MonoBehaviour
     {
         Debug.Log("Coroutine chamada no ActiveSkill");
         isActive = true;
+        originalParent = transform.parent;
+
         OnActivate();
+        transform.SetParent(null);
         nextReadyTime = Time.time + cooldown;
 
-        if(gameObject.activeSelf)
+        if (gameObject.activeSelf)
             Debug.Log("ActiveSkill is active");
 
         yield return new WaitForSeconds(duration);
-        gameObject.SetActive(false);
+
         isActive = false;
+        transform.SetParent(originalParent);
         OnDeactivate();
+        gameObject.SetActive(false);
     }
 
     protected virtual void OnActivate() {}
