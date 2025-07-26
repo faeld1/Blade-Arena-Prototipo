@@ -11793,11 +11793,15 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: f449c338bcdcba941b90575aa47b0238, type: 2}
     - target: {fileID: 1107769016188044216, guid: f38704f53bb69664fa6bbb5f2a9af2bb, type: 3}
       propertyPath: duration
-      value: 1.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 1107769016188044216, guid: f38704f53bb69664fa6bbb5f2a9af2bb, type: 3}
       propertyPath: moveSpeed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107769016188044216, guid: f38704f53bb69664fa6bbb5f2a9af2bb, type: 3}
+      propertyPath: activationRange
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1107769016188044216, guid: f38704f53bb69664fa6bbb5f2a9af2bb, type: 3}
       propertyPath: 'damageMultipliers.Array.data[1]'
@@ -11861,7 +11865,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8954731154046391587, guid: f38704f53bb69664fa6bbb5f2a9af2bb, type: 3}
       propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Value
-      value: 1.5
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

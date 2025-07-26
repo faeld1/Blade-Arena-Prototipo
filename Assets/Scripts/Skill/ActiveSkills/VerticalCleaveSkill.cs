@@ -57,7 +57,7 @@ public class VerticalCleaveSkill : ActiveSkill
 
     private void Reset()
     {
-        activationRange = 1000f;
+        activationRange = 2.1f;
         animationTrigger = "SkillVerticalCleave";
         duration = 2f;
     }
