@@ -35,6 +35,13 @@ public class Player_Combat : MonoBehaviour
 
         attackTimer += Time.deltaTime;
 
+        if (isAttacking)
+        {
+            var stateInfo = player.animator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("Player_SwordIdle01"))
+                ResetAttack();
+        }
+
         TryAttack();
     }
 
