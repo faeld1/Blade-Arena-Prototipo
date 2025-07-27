@@ -17,8 +17,9 @@ public class SwordSlashSkill : ActiveSkill
 
     protected override void OnActivate()
     {
-        enemiesHit.Clear();
         // VFX is played when the GameObject becomes active
+        enemiesHit.Clear();
+        transform.rotation = Quaternion.identity;
     }
 
     private void OnTriggerEnter(Collider other)

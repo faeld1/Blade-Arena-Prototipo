@@ -35,12 +35,12 @@ public class Player_Combat : MonoBehaviour
 
         attackTimer += Time.deltaTime;
 
-        if (isAttacking)
+        /*if (isAttacking) // Check if the attack animation has ended
         {
             var stateInfo = player.animator.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("Player_SwordIdle01"))
                 ResetAttack();
-        }
+        }*/
 
         TryAttack();
     }
@@ -52,9 +52,6 @@ public class Player_Combat : MonoBehaviour
         if (player != null)
             player.animator.SetBool("IsAttacking", false);
     }
-
-
-
 
     public void ResetCurrentTarget() => currentTarget = null;
 
