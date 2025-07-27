@@ -15,6 +15,7 @@ public abstract class ActiveSkill : MonoBehaviour
     protected bool isActive;
     private float nextReadyTime;
     private Transform originalParent;
+    private Transform originalPosition;
 
     protected virtual void Awake()
     {
@@ -61,6 +62,7 @@ public abstract class ActiveSkill : MonoBehaviour
         Debug.Log("Coroutine chamada no ActiveSkill");
         isActive = true;
         originalParent = transform.parent;
+        originalPosition = transform;
 
         OnActivate();
         transform.SetParent(null);
@@ -73,6 +75,7 @@ public abstract class ActiveSkill : MonoBehaviour
 
         isActive = false;
         transform.SetParent(originalParent);
+        transform.position = originalPosition.position;
         OnDeactivate();
         gameObject.SetActive(false);
     }
