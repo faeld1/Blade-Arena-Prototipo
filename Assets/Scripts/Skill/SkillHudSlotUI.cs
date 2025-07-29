@@ -111,6 +111,12 @@ public class SkillHudSlotUI : MonoBehaviour, IDropHandler, IPointerClickHandler
         var dragged = DraggedSkillSlot.draggedSlotUI;
         if (dragged == null || dragged == this) return;
 
+        // Block swapping a reserved skill onto an active slot if the active
+        // skill is currently on cooldown. Dragged skill will be from the
+        // reserved container when !dragged.IsActive().
+        if (!dragged.IsActive() && IsActive() && IsOnCooldown())
+            return;
+
         SkillManager.Instance.SwapSkills(dragged.GetInstance(), instance);
     }
 
