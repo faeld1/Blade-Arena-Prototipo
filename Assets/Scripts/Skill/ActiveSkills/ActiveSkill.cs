@@ -10,12 +10,12 @@ public abstract class ActiveSkill : MonoBehaviour
     [SerializeField] protected float activationRange = 1.5f;
     [SerializeField] protected string animationTrigger = "";
     [SerializeField] private SkillData data;
+    [SerializeField] private Transform skillStartPosition;
 
     [SerializeField] protected Player owner;
     protected bool isActive;
     private float nextReadyTime;
     private Transform originalParent;
-    private Transform originalPosition;
     private Transform originalRotation;
 
     protected virtual void Awake()
@@ -63,7 +63,8 @@ public abstract class ActiveSkill : MonoBehaviour
         Debug.Log("Coroutine chamada no ActiveSkill");
         isActive = true;
         originalParent = transform.parent;
-        originalPosition = transform;
+        if(skillStartPosition != null)
+            transform.position = skillStartPosition.position;
         originalRotation = transform;
 
         OnActivate();
@@ -77,7 +78,6 @@ public abstract class ActiveSkill : MonoBehaviour
 
         isActive = false;
         transform.SetParent(originalParent);
-        transform.position = originalPosition.position;
         transform.rotation = originalRotation.rotation;
         OnDeactivate();
         gameObject.SetActive(false);

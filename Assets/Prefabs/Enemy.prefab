@@ -738,7 +738,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleTime: 1
   moveSpeed: 2
-  turnSpeed: 3
+  turnSpeed: 30
   attackRange: 2
 --- !u!114 &3048053114638702221
 MonoBehaviour:

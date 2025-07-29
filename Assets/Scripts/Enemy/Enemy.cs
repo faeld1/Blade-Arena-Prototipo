@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Move Settings")]
     public float moveSpeed; // Speed at which the enemy moves
-    public float turnSpeed; // Speed at which the enemy turns towards the target
+    public float turnSpeed = 30f; // Speed at which the enemy turns towards the target
 
     [Header("Attack Settings")]
     public float attackRange; // Range within which the enemy can attack

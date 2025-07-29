@@ -30,7 +30,12 @@ public class Player : MonoBehaviour
 
     private void UpdateAnimations()
     {
+        bool isAttacking = animator.GetBool("IsAttacking"); // Verifica se o jogador está atacando
+
         bool isMoving = movement.IsMoving();
+
+        if (isAttacking)
+            isMoving = false; // Se estiver atacando, não deve estar andando
 
         // Só muda o bool se ele for diferente do valor atual
         if (animator.GetBool("IsWalking") != isMoving)

@@ -129,6 +129,7 @@ public class Player_Combat : MonoBehaviour
 
     private void StartAttackAnimation()
     {
+        player.SetIdle();
         player.PlayAttack();
     }
 
